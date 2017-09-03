@@ -1,0 +1,41 @@
+language: php
+
+sudo: false
+
+matrix:
+  include:
+    - php: 7.1
+      env: SETUP=basic CS=true
+    - php: 7.1
+      env: SETUP=basic SEND_COVERAGE=true PHPUNIT=true
+    - php: 7.1
+      env: SETUP=basic PHPSTAN=true
+#    - php: 7.2
+#      env: SETUP=basic PHPUNIT=true
+  fast_finish: true
+
+cache:
+yarn: true
+  directories:
+    - node_modules
+    - $HOME/.composer/cache
+    - $HOME/.php-cs-fixer
+
+before_install:
+  - chmod a+x ./build/travis/script.sh && chmod a+x ./build/travis/after_success.sh
+
+install:
+  - yarn install
+  - travis_retry composer install --no-interaction --prefer-dist --no-progress --profile --no-suggest
+
+script:
+  - ./build/travis/script.sh
+
+after_success:
+  - ./build/travis/after_success.sh
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/5886ad33ac123a7c06b0
