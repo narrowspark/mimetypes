@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class ActualMimeTypeDbTest extends TestCase
 {
+    public const PATH = __DIR__ . '/Fixture/ActualMimeTypeDbList.php';
+
     public function setUp(): void
     {
         parent::setUp();
@@ -21,7 +23,7 @@ class ActualMimeTypeDbTest extends TestCase
             {
                 [$stubFilePath, $outputFilePath, $mimeDbPath] = parent::getFilePaths();
 
-                $outputFilePath = __DIR__ . '/Fixture/ActualMimeTypeDbList.php';
+                $outputFilePath = ActualMimeTypeDbTest::PATH;
 
                 return [$stubFilePath, $outputFilePath, $mimeDbPath];
             }
@@ -44,6 +46,13 @@ class ActualMimeTypeDbTest extends TestCase
         };
 
         self::assertSame(1, $create::create());
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        \unlink(ActualMimeTypeDbTest::PATH);
     }
 
     public function testDbIsActual(): void

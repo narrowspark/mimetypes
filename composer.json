@@ -33,9 +33,6 @@
         "exclude-from-classmap"               : ["tests/"]
     },
     "autoload-dev": {
-        "files": [
-            "build/command/CreateMimeTypesList.php"
-        ],
         "psr-4": {
             "Narrowspark\\Mimetypes\\Tests\\" : "tests/"
         }
