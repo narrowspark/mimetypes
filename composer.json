@@ -33,6 +33,9 @@
         "exclude-from-classmap"               : ["tests/"]
     },
     "autoload-dev": {
+        "files": [
+            "build/command/CreateMimeTypesList.php"
+        ],
         "psr-4": {
             "Narrowspark\\Mimetypes\\Tests\\" : "tests/"
         }
@@ -45,6 +48,7 @@
     "minimum-stability"                       : "dev",
     "scripts": {
         "cs"                                  : "sh vendor/bin/php-cs-fixer fix",
-        "phpstan"                             : "sh vendor/bin/phpstan analyse -c phpstan.neon -l 6 src/"
+        "phpstan"                             : "sh vendor/bin/phpstan analyse -c phpstan.neon -l 6 src/",
+        "build"                               : "@php -r \"require 'build/command/CreateMimeTypesList.php'; CreateMimeTypesList::create();\""
     }
 }

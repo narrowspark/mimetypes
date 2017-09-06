@@ -17,7 +17,7 @@ matrix:
 cache:
 yarn: true
   directories:
-    - node_modules
+    - $HOME/node_modules
     - $HOME/.composer/cache
     - $HOME/.php-cs-fixer
 
@@ -25,7 +25,7 @@ before_install:
   - chmod a+x ./build/travis/script.sh && chmod a+x ./build/travis/after_success.sh
 
 install:
-  - yarn install
+  - yarn upgrade
   - travis_retry composer install --no-interaction --prefer-dist --no-progress --profile --no-suggest
 
 script:
