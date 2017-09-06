@@ -48,7 +48,7 @@ class ActualMimeTypeDbTest extends TestCase
         self::assertSame(1, $create::create());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

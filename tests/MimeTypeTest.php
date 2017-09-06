@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class MimeTypeTest extends TestCase
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function tearDownAfterClass(): void
     {
         if (\file_exists($path = __DIR__ . '/Fixture/to_delete')) {
@@ -49,11 +52,6 @@ class MimeTypeTest extends TestCase
         self::assertEquals(
             'image/gif',
             FileinfoMimeTypeGuesser::guess(__DIR__ . '/Fixture/test.gif')
-        );
-
-        self::assertEquals(
-            'application/xml',
-            FileinfoMimeTypeGuesser::guess(__DIR__ . '/Fixture/meta.xml')
         );
     }
 
@@ -102,7 +100,7 @@ class MimeTypeTest extends TestCase
         @\chmod($path, 0333);
 
         if (\mb_substr(\sprintf('%o', \fileperms($path)), -4) == '0333') {
-            self::expectException(AccessDeniedException::class);
+            $this->expectException(AccessDeniedException::class);
 
             MimeType::guess($path);
         } else {

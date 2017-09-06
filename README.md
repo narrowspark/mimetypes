@@ -8,6 +8,15 @@
     <a href="http://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
 </p>
 
+built with [jshttp/mime-db][1].
+
+Mime types mapping, the right way.
+------------
+This library uses [jshttp/mime-db][1] as its default mapping which aggregates data from multiple sources and creates a single ```db.json``` making it the most complete mapping.
+- [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml)
+- [Apache](http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
+- [Nginx](http://hg.nginx.org/nginx/file/tip/conf/mime.types)
+
 Installation
 ------------
 
@@ -20,7 +29,31 @@ Use
 
 ```php
 <?php
+    use Narrowspark\Mimetypes\MimeType;
 
+    return MimeType::guess('image.gif'); // returns image/gif
+```
+
+You looking for the full mime type array? Just use:
+
+```php
+<?php
+    use Narrowspark\Mimetypes\MimeTypesList;
+
+    return MimeTypesList::MIMES; // returns array
+```
+
+If you like to use the build in php mime type guesser, just use:
+
+```php
+<?php
+    use Narrowspark\Mimetypes\FileinfoMimeTypeGuesser;
+    use Narrowspark\Mimetypes\FileBinaryMimeTypeGuesser;
+    
+    // It all ends up inspecting the file using finfo and relies on magic db files.
+    return FileinfoMimeTypeGuesser::guess('image.gif'); // returns image/gif
+    // only available on *nix!
+    return FileBinaryMimeTypeGuesser::guess('image.gif'); // returns image/gif
 ```
 
 Contributing
@@ -34,3 +67,5 @@ License
 ---------------
 
 The Narrowspark mimetypes is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
+[1]: http://github.com/jshttp/mime-db
