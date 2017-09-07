@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace Narrowspark\Mimetypes;
 
+use Narrowspark\Mimetypes\Exception\AccessDeniedException;
+
 class FileBinaryMimeTypeGuesser
 {
     /**
@@ -33,10 +35,16 @@ class FileBinaryMimeTypeGuesser
      *                     The command output must start with the mime type of the file.
      *                     Like: text/plain; charset=us-ascii
      *
+     * @throws \Narrowspark\Mimetypes\Exception\AccessDeniedException If the file could not be read
+     *
      * @return null|string
      */
     public static function guess(string $path, string $cmd = null): ?string
     {
+        if (! \is_readable($path)) {
+            throw new AccessDeniedException($path);
+        }
+
         if ($cmd === null) {
             $cmd = 'file -b --mime %s';
 

@@ -49,11 +49,15 @@ If you like to use the build in php mime type guesser, just use:
 <?php
     use Narrowspark\Mimetypes\FileinfoMimeTypeGuesser;
     use Narrowspark\Mimetypes\FileBinaryMimeTypeGuesser;
+    use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
+
     
-    // It all ends up inspecting the file using finfo and relies on magic db files.
+    // Inspecting the file using finfo and relies on magic db files.
     return FileinfoMimeTypeGuesser::guess('image.gif'); // returns image/gif
-    // only available on *nix!
+    // Inspecting the file using file -b --mime
     return FileBinaryMimeTypeGuesser::guess('image.gif'); // returns image/gif
+    // Inspecting the file using mime type list
+    return MimeTypeByExtensionGuesser::guess('gif'); // returns image/gif
 ```
 
 Contributing

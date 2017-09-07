@@ -36,23 +36,8 @@ final class MimeType
             throw new AccessDeniedException($filename);
         }
 
-        $ext       = \pathinfo($filename, PATHINFO_EXTENSION);
-        $extension = null;
+        $ext = \pathinfo($filename, PATHINFO_EXTENSION);
 
-        if (isset(MimeTypesList::MIMES[$ext])) {
-            return MimeTypesList::MIMES[$ext][0];
-        }
-
-        if ($extension === null) {
-            if (FileBinaryMimeTypeGuesser::isSupported()) {
-                return FileBinaryMimeTypeGuesser::guess($filename);
-            }
-
-            if (FileinfoMimeTypeGuesser::isSupported()) {
-                return FileinfoMimeTypeGuesser::guess($filename);
-            }
-        }
-
-        return $extension;
+        return MimeTypeByExtensionGuesser::guess($ext);
     }
 }
