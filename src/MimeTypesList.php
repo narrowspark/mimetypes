@@ -4,6 +4,17 @@ namespace Narrowspark\Mimetypes;
 
 class MimeTypesList
 {
+    /**
+     * A map of file extensions and their mime types.
+     *
+     * Last generated: Thu, 07 Sep 2017 17:49:55 GMT
+     *
+     * @see http://www.iana.org/assignments/media-types/media-types.xhtml
+     * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
+     * @see http://hg.nginx.org/nginx/file/tip/conf/mime.types
+     *
+     * @var array
+     */
     public const MIMES = [
         'ez' => [
             0 => 'application/andrew-inset',

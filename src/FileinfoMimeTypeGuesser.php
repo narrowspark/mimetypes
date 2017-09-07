@@ -16,6 +16,16 @@ class FileinfoMimeTypeGuesser
     }
 
     /**
+     * Returns whether this guesser is supported on the current OS/PHP setup.
+     *
+     * @return bool
+     */
+    public static function isSupported()
+    {
+        return function_exists('finfo_open');
+    }
+
+    /**
      * Guesses the mime type using the PECL extension FileInfo.
      *
      * @param string $filename  The path to the file

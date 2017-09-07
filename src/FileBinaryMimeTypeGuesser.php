@@ -14,6 +14,16 @@ class FileBinaryMimeTypeGuesser
     }
 
     /**
+     * Returns whether this guesser is supported on the current OS.
+     *
+     * @return bool
+     */
+    public static function isSupported()
+    {
+        return DIRECTORY_SEPARATOR !== '\\' && \function_exists('\passthru') && \function_exists('\escapeshellarg');
+    }
+
+    /**
      * Guesses the mime type with the binary "file" (only available on *nix).
      *
      * @param string $path
@@ -24,10 +34,16 @@ class FileBinaryMimeTypeGuesser
      *
      * @return null|string
      */
-    public static function guess(
-        string $path,
-        string $cmd = 'file -b --mime %s 2>/dev/null'
-    ): ?string {
+    public static function guess(string $path, string $cmd = null): ?string
+    {
+        if ($cmd === null) {
+            $cmd = 'file -b --mime %s';
+
+            if (\mb_strtolower(\mb_substr(PHP_OS, 0, 3)) !== 'win') {
+                $cmd .= ' 2>/dev/null';
+            }
+        }
+
         \ob_start();
 
         // need to use --mime instead of -i.

@@ -59,10 +59,7 @@ class MimeTypeTest extends TestCase
 
     public function testGuessExtensionWithFileBinaryMimeTypeGuesser(): void
     {
-        if (DIRECTORY_SEPARATOR !== '\\' &&
-            \function_exists('\passthru') &&
-            \function_exists('\escapeshellarg')
-        ) {
+        if (FileBinaryMimeTypeGuesser::isSupported()) {
             self::markTestSkipped('Can only run on a nix* system');
         }
 
@@ -104,7 +101,7 @@ class MimeTypeTest extends TestCase
 
     public function testGuessWithNonReadablePath(): void
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if (DIRECTORY_SEPARATOR === '\\') {
             self::markTestSkipped('Can not verify chmod operations on Windows');
         }
 
@@ -144,12 +141,12 @@ class MimeTypeTest extends TestCase
      */
     public function extensionDataProvider()
     {
-        return array(
+        return [
             ['jpg', 'image/jpeg'],
-            ['wmz', 'application/x-msmetafile'],
+            ['wmz', 'application/x-ms-wmz'],
             ['ecelp9600', 'audio/vnd.nuera.ecelp9600'],
             ['unknownextension', null],
-        );
+        ];
     }
 
     /**

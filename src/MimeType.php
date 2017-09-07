@@ -44,14 +44,11 @@ final class MimeType
         }
 
         if ($extension === null) {
-            if (DIRECTORY_SEPARATOR !== '\\' &&
-                \function_exists('\passthru') &&
-                \function_exists('\escapeshellarg')
-            ) {
+            if (FileBinaryMimeTypeGuesser::isSupported()) {
                 return FileBinaryMimeTypeGuesser::guess($filename);
             }
 
-            if (\function_exists('finfo_open')) {
+            if (FileinfoMimeTypeGuesser::isSupported()) {
                 return FileinfoMimeTypeGuesser::guess($filename);
             }
         }

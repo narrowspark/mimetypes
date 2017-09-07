@@ -17,8 +17,18 @@ class CreateMimeTypesList
         $output = \file_put_contents(
             $outputFilePath,
             \str_replace(
-                ['{dummyList}', '{dummyClass}', '{dummyNamespace}'],
-                [self::getPrettyPrintArray($mimeTypeList), static::getClassName(), static::getNamespace()],
+                [
+                    '{dummyList}',
+                    '{dummyClass}',
+                    '{dummyNamespace}',
+                    '{date}'
+                ],
+                [
+                    self::getPrettyPrintArray($mimeTypeList),
+                    static::getClassName(),
+                    static::getNamespace(),
+                    \gmdate('D, d M Y H:i:s T', time())
+                ],
                 \file_get_contents($stubFilePath)
             )
         );
