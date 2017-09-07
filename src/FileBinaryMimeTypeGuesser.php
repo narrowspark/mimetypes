@@ -20,17 +20,18 @@ class FileBinaryMimeTypeGuesser
      */
     public static function isSupported()
     {
-        return DIRECTORY_SEPARATOR !== '\\' && \function_exists('\passthru') && \function_exists('\escapeshellarg');
+        return \function_exists('\passthru') && \function_exists('\escapeshellarg');
     }
 
     /**
-     * Guesses the mime type with the binary "file" (only available on *nix).
+     * Guesses the mime type with the binary "file".
      *
      * @param string $path
      * @param string $cmd  The command to run to get the mime type of a file.
      *                     The $cmd pattern must contain a "%s" string that will be replaced
      *                     with the file name to guess.
      *                     The command output must start with the mime type of the file.
+     *                     Like: text/plain; charset=us-ascii
      *
      * @return null|string
      */

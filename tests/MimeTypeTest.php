@@ -59,8 +59,8 @@ class MimeTypeTest extends TestCase
 
     public function testGuessExtensionWithFileBinaryMimeTypeGuesser(): void
     {
-        if (FileBinaryMimeTypeGuesser::isSupported()) {
-            self::markTestSkipped('Can only run on a nix* system');
+        if (! FileBinaryMimeTypeGuesser::isSupported()) {
+            self::markTestSkipped('Can only run on a *nix system');
         }
 
         self::assertEquals(
