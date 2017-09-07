@@ -19,7 +19,8 @@
         }
     ],
     "require": {
-        "php"                                 : "^7.1"
+        "php"                                 : "^7.1",
+        "symfony/polyfill-mbstring"           : "^1.5"
     },
     "require-dev": {
         "ext-fileinfo"                        : "*",

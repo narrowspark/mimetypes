@@ -4,8 +4,10 @@ namespace Narrowspark\Mimetypes\Tests;
 
 use Narrowspark\Mimetypes\Exception\AccessDeniedException;
 use Narrowspark\Mimetypes\Exception\FileNotFoundException;
+use Narrowspark\Mimetypes\FileBinaryMimeTypeGuesser;
 use Narrowspark\Mimetypes\FileinfoMimeTypeGuesser;
 use Narrowspark\Mimetypes\MimeType;
+use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
 use PHPUnit\Framework\TestCase;
 
 class MimeTypeTest extends TestCase
@@ -15,7 +17,7 @@ class MimeTypeTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        if (\file_exists($path = __DIR__ . '/Fixture/to_delete')) {
+        if (\file_exists($path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete'))) {
             @\chmod($path, 0666);
             @\unlink($path);
         }
@@ -25,39 +27,54 @@ class MimeTypeTest extends TestCase
     {
         self::assertEquals(
             'application/vnd.lotus-1-2-3',
-            MimeType::guess(__DIR__ . '/Fixture/lotus.123')
+            MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/lotus.123'))
         );
 
         self::assertEquals(
             'application/xml',
-            MimeType::guess(__DIR__ . '/Fixture/meta.xml')
+            MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/meta.xml'))
         );
     }
 
     public function testGuessExtensionIsBasedOnMimeType(): void
     {
-        self::assertEquals('image/gif', MimeType::guess(__DIR__ . '/Fixture/test'));
+        self::assertEquals('image/gif', MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test')));
     }
 
     /**
      * @requires extension fileinfo
      */
-    public function testGuessExtensionWithFileinfo(): void
+    public function testGuessExtensionWithFileinfoMimeTypeGuesser(): void
     {
         self::assertEquals(
             'inode/x-empty',
-            FileinfoMimeTypeGuesser::guess(__DIR__ . '/Fixture/other-file.example')
+            FileinfoMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
         );
 
         self::assertEquals(
             'image/gif',
-            FileinfoMimeTypeGuesser::guess(__DIR__ . '/Fixture/test.gif')
+            FileinfoMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test.gif'))
+        );
+    }
+
+    public function testGuessExtensionWithFileBinaryMimeTypeGuesser(): void
+    {
+        if (DIRECTORY_SEPARATOR !== '\\' &&
+            \function_exists('\passthru') &&
+            \function_exists('\escapeshellarg')
+        ) {
+            self::markTestSkipped('Can only run on a nix* system');
+        }
+
+        self::assertEquals(
+            'application/octet-stream',
+            FileBinaryMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/latlon.bin'))
         );
     }
 
     public function testGuessExtensionToThrowExceptionIfNoFileFound(): void
     {
-        $path = __DIR__ . '/Fixture/test---';
+        $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test---');
 
         try {
             MimeType::guess($path);
@@ -68,7 +85,7 @@ class MimeTypeTest extends TestCase
 
     public function testGuessImageWithDirectoryToThrowExceptionIfNoFileFound(): void
     {
-        $path = __DIR__ . '/Fixture/directory';
+        $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/directory');
 
         try {
             MimeType::guess($path);
@@ -81,7 +98,7 @@ class MimeTypeTest extends TestCase
     {
         self::assertEquals(
             'application/octet-stream',
-            MimeType::guess(__DIR__ . '/Fixture/.unknownextension')
+            MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/.unknownextension'))
         );
     }
 
@@ -95,7 +112,7 @@ class MimeTypeTest extends TestCase
             self::markTestSkipped('This test will fail if run under superuser');
         }
 
-        $path = __DIR__ . '/Fixture/to_delete';
+        $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete');
         \touch($path);
         @\chmod($path, 0333);
 
@@ -106,5 +123,44 @@ class MimeTypeTest extends TestCase
         } else {
             self::markTestSkipped('Can not verify chmod operations, change of file permissions failed');
         }
+    }
+
+    /**
+     * @dataProvider extensionDataProvider
+     *
+     * @param string      $extension
+     * @param null|string $mimeType
+     */
+    public function testGuessMimeTypeFromExtension(string $extension, ?string $mimeType): void
+    {
+        self::assertEquals(
+            $mimeType,
+            MimeTypeByExtensionGuesser::guess($extension)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function extensionDataProvider()
+    {
+        return array(
+            ['jpg', 'image/jpeg'],
+            ['wmz', 'application/x-msmetafile'],
+            ['ecelp9600', 'audio/vnd.nuera.ecelp9600'],
+            ['unknownextension', null],
+        );
+    }
+
+    /**
+     * Fix directory separators for windows, linux and normalize path.
+     *
+     * @param array|string $paths
+     *
+     * @return array|string
+     */
+    private static function normalizeDirectorySeparator($paths)
+    {
+        return \str_replace('\\', '/', $paths);
     }
 }
