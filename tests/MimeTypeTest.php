@@ -47,22 +47,6 @@ class MimeTypeTest extends TestCase
         }
     }
 
-    /**
-     * @requires extension fileinfo
-     */
-    public function testGuessExtensionWithFileinfoMimeTypeGuesser(): void
-    {
-        self::assertSame(
-            'inode/x-empty',
-            FileinfoMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
-        );
-
-        self::assertSame(
-            'image/gif',
-            FileinfoMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test.gif'))
-        );
-    }
-
     public function testGuessExtensionWithFileBinaryMimeTypeGuesser(): void
     {
         if (! FileBinaryMimeTypeGuesser::isSupported()) {
