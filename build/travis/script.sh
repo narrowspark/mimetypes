@@ -14,8 +14,10 @@ bash -e <<TRY
         ./vendor/bin/php-cs-fixer fix --config=.php_cs --verbose --diff --dry-run
     fi
 
-    if [[ "$PHPUNIT" = true && "$SEND_COVERAGE" = true ]]; then
-        ./vendor/bin/phpunit -c phpunit.xml.dist --verbose --coverage-clover=coverage.xml;
+    if [[ "$SEND_COVERAGE" = true ]]; then
+        bash -xc "$TEST -c ./phpunit.xml.dist --verbose --coverage-clover=coverage.xml";
+    elif [[ "$PHPUNIT" = true ]]; then
+        bash -xc "$TEST -c ./phpunit.xml.dist";
     fi
 TRY
 if [ $? -ne 0 ]; then

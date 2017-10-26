@@ -7,7 +7,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Thu, 07 Sep 2017 17:49:55 GMT
+     * Last generated: Thu, 26 Oct 2017 19:56:34 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -88,9 +88,11 @@ class MimeTypesList
         ],
         'woff' => [
             0 => 'application/font-woff',
+            1 => 'font/woff',
         ],
         'woff2' => [
             0 => 'application/font-woff2',
+            1 => 'font/woff2',
         ],
         'geojson' => [
             0 => 'application/geo+json',
@@ -392,6 +394,9 @@ class MimeTypesList
         ],
         'pskcxml' => [
             0 => 'application/pskc+xml',
+        ],
+        'raml' => [
+            0 => 'application/raml+yaml',
         ],
         'rdf' => [
             0 => 'application/rdf+xml',
@@ -1773,6 +1778,9 @@ class MimeTypesList
         'vxml' => [
             0 => 'application/voicexml+xml',
         ],
+        'wasm' => [
+            0 => 'application/wasm',
+        ],
         'wgt' => [
             0 => 'application/widget',
         ],
@@ -1941,21 +1949,11 @@ class MimeTypesList
         'psf' => [
             0 => 'application/x-font-linux-psf',
         ],
-        'otf' => [
-            0 => 'application/x-font-otf',
-            1 => 'font/otf',
-        ],
         'pcf' => [
             0 => 'application/x-font-pcf',
         ],
         'snf' => [
             0 => 'application/x-font-snf',
-        ],
-        'ttf' => [
-            0 => 'application/x-font-ttf',
-        ],
-        'ttc' => [
-            0 => 'application/x-font-ttf',
         ],
         'pfa' => [
             0 => 'application/x-font-type1',
@@ -2515,6 +2513,15 @@ class MimeTypesList
         'xyz' => [
             0 => 'chemical/x-xyz',
         ],
+        'ttc' => [
+            0 => 'font/collection',
+        ],
+        'otf' => [
+            0 => 'font/otf',
+        ],
+        'ttf' => [
+            0 => 'font/ttf',
+        ],
         'apng' => [
             0 => 'image/apng',
         ],
@@ -2534,6 +2541,12 @@ class MimeTypesList
         'ief' => [
             0 => 'image/ief',
         ],
+        'jp2' => [
+            0 => 'image/jp2',
+        ],
+        'jpg2' => [
+            0 => 'image/jp2',
+        ],
         'jpeg' => [
             0 => 'image/jpeg',
         ],
@@ -2542,6 +2555,16 @@ class MimeTypesList
         ],
         'jpe' => [
             0 => 'image/jpeg',
+        ],
+        'jpm' => [
+            0 => 'image/jpm',
+            1 => 'video/jpm',
+        ],
+        'jpx' => [
+            0 => 'image/jpx',
+        ],
+        'jpf' => [
+            0 => 'image/jpx',
         ],
         'ktx' => [
             0 => 'image/ktx',
@@ -3065,9 +3088,6 @@ class MimeTypesList
         ],
         'jpgv' => [
             0 => 'video/jpeg',
-        ],
-        'jpm' => [
-            0 => 'video/jpm',
         ],
         'jpgm' => [
             0 => 'video/jpm',
