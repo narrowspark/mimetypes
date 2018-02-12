@@ -7,7 +7,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Thu, 26 Oct 2017 19:56:34 GMT
+     * Last generated: Mon, 12 Feb 2018 17:30:02 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -108,6 +108,9 @@ class MimeTypesList
         ],
         'gz' => [
             0 => 'application/gzip',
+        ],
+        'hjson' => [
+            0 => 'application/hjson',
         ],
         'stk' => [
             0 => 'application/hyperstudio',
@@ -2816,9 +2819,6 @@ class MimeTypesList
         'csv' => [
             0 => 'text/csv',
         ],
-        'hjson' => [
-            0 => 'text/hjson',
-        ],
         'html' => [
             0 => 'text/html',
         ],
@@ -2884,6 +2884,9 @@ class MimeTypesList
         ],
         'sgm' => [
             0 => 'text/sgml',
+        ],
+        'shex' => [
+            0 => 'text/shex',
         ],
         'slim' => [
             0 => 'text/slim',
