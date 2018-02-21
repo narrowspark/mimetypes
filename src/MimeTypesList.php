@@ -7,7 +7,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Mon, 12 Feb 2018 17:30:02 GMT
+     * Last generated: Wed, 21 Feb 2018 20:28:03 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -89,10 +89,6 @@ class MimeTypesList
         'woff' => [
             0 => 'application/font-woff',
             1 => 'font/woff',
-        ],
-        'woff2' => [
-            0 => 'application/font-woff2',
-            1 => 'font/woff2',
         ],
         'geojson' => [
             0 => 'application/geo+json',
@@ -2525,6 +2521,9 @@ class MimeTypesList
         'ttf' => [
             0 => 'font/ttf',
         ],
+        'woff2' => [
+            0 => 'font/woff2',
+        ],
         'apng' => [
             0 => 'image/apng',
         ],
@@ -2726,11 +2725,29 @@ class MimeTypesList
         'xwd' => [
             0 => 'image/x-xwindowdump',
         ],
+        'disposition-notification' => [
+            0 => 'message/disposition-notification',
+        ],
+        'u8msg' => [
+            0 => 'message/global',
+        ],
+        'u8dsn' => [
+            0 => 'message/global-delivery-status',
+        ],
+        'u8mdn' => [
+            0 => 'message/global-disposition-notification',
+        ],
+        'u8hdr' => [
+            0 => 'message/global-headers',
+        ],
         'eml' => [
             0 => 'message/rfc822',
         ],
         'mime' => [
             0 => 'message/rfc822',
+        ],
+        'wsc' => [
+            0 => 'message/vnd.wfa.wsc',
         ],
         'gltf' => [
             0 => 'model/gltf+json',
