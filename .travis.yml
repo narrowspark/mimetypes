@@ -23,9 +23,6 @@ install:
   - composer global require hirak/prestissimo
   - $COMPOSER_UP
 
-script:
-  - ./build/travis/script.sh
-
 jobs:
   include:
     - stage: Test
