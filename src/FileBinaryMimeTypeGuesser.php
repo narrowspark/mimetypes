@@ -18,11 +18,26 @@ class FileBinaryMimeTypeGuesser
     /**
      * Returns whether this guesser is supported on the current OS.
      *
-     * @return bool
+     * @return null|bool
      */
-    public static function isSupported()
+    public static function isSupported(): ?bool
     {
-        return \function_exists('\passthru') && \function_exists('\escapeshellarg');
+        static $supported = null;
+
+        if ($supported !== null) {
+            return $supported;
+        }
+
+        if (DIRECTORY_SEPARATOR === '\\' || ! \function_exists('passthru') || ! \function_exists('escapeshellarg')) {
+            return $supported = false;
+        }
+
+        \ob_start();
+        \passthru('command -v file', $exitStatus);
+
+        $binPath = \trim(\ob_get_clean());
+
+        return $supported = $exitStatus === 0 && '' !== $binPath;
     }
 
     /**

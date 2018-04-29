@@ -91,7 +91,7 @@ class MimeTypeTest extends TestCase
     {
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/.unknownextension');
 
-        self::assertSame(null, MimeType::guess($path));
+        self::assertNull(MimeType::guess($path));
         self::assertSame('application/octet-stream', FileinfoMimeTypeGuesser::guess($path));
 
         if (! FileBinaryMimeTypeGuesser::isSupported()) {

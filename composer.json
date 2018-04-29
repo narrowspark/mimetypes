@@ -1,56 +1,61 @@
 {
     "name": "narrowspark/mimetypes",
-    "description": "PHP MIME Types Guesser and extension mapping.",
     "type": "library",
-    "keywords"   : [
+    "description": "PHP MIME Types Guesser and extension mapping.",
+    "keywords": [
         "narrowspark",
         "mimetypes"
     ],
-    "support"    : {
-        "issues": "https://github.com/narrowspark/mimetypes/issues",
-        "source": "https://github.com/narrowspark/mimetypes"
-    },
-    "authors"    : [
+    "license": "MIT",
+    "authors": [
         {
-          "name"    : "Daniel Bannert",
-          "email"   : "d.bannert@anolilab.de",
-          "homepage": "http://www.anolilab.de",
-          "role"    : "Developer"
+            "name": "Daniel Bannert",
+            "email": "d.bannert@anolilab.de",
+            "homepage": "http://www.anolilab.de",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php"                                 : "^7.1",
-        "symfony/polyfill-mbstring"           : "^1.5"
+        "php": "^7.1",
+        "symfony/polyfill-mbstring": "^1.5"
     },
     "require-dev": {
-        "ext-fileinfo"                        : "*",
-        "phpunit/phpunit"                     : "^6.0",
-        "narrowspark/php-cs-fixer-config"     : "^2.0",
-        "phpstan/phpstan"                     : "^0.8"
+        "ext-fileinfo": "*",
+        "narrowspark/php-cs-fixer-config": "^2.1",
+        "phpstan/phpstan": "^0.9",
+        "phpstan/phpstan-phpunit": "^0.9",
+        "phpunit/phpunit": "^7.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "Narrowspark\\Mimetypes\\"        : "src/"
+            "Narrowspark\\Mimetypes\\": "src/"
         },
-        "exclude-from-classmap"               : ["tests/"]
+        "exclude-from-classmap": [
+            "tests/"
+        ]
     },
     "autoload-dev": {
+        "psr-4": {
+            "Narrowspark\\Mimetypes\\Tests\\": "tests/"
+        },
         "files": [
             "build/command/CreateMimeTypesList.php"
-        ],
-        "psr-4": {
-            "Narrowspark\\Mimetypes\\Tests\\" : "tests/"
-        }
+        ]
     },
-    "config": {
-        "sort-packages"                       : true,
-        "optimize-autoloader"                 : true
-    },
-    "license"                                 : "MIT",
-    "minimum-stability"                       : "stable",
+    "minimum-stability": "stable",
     "scripts": {
-        "cs"                                  : "php-cs-fixer fix",
-        "phpstan"                             : "phpstan analyse -c phpstan.neon -l 6 src/",
-        "build"                               : "@php -r \"require 'build/command/CreateMimeTypesList.php'; CreateMimeTypesList::create();\""
+        "build": "@php -r \"require 'build/command/CreateMimeTypesList.php'; CreateMimeTypesList::create();\"",
+        "coverage": "phpunit --coverage-html=\"build/logs\"",
+        "cs": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse -c phpstan.neon -l 7 src --memory-limit=-1",
+        "test": "phpunit"
+    },
+    "support": {
+        "issues": "https://github.com/narrowspark/mimetypes/issues",
+        "source": "https://github.com/narrowspark/mimetypes"
     }
 }

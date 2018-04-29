@@ -22,9 +22,9 @@ class FileinfoMimeTypeGuesser
      *
      * @return bool
      */
-    public static function isSupported()
+    public static function isSupported(): bool
     {
-        return function_exists('finfo_open');
+        return \function_exists('finfo_open');
     }
 
     /**
