@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-namespace Narrowspark\Mimetypes\Tests;
+namespace Narrowspark\MimeType\Tests;
 
 use CreateMimeTypesList;
-use Narrowspark\Mimetypes\MimeTypesList;
-use Narrowspark\Mimetypes\Tests\Fixture\ActualMimeTypeDbList;
+use Narrowspark\MimeType\MimeTypesList;
+use Narrowspark\MimeType\Tests\Fixture\ActualMimeTypeDbList;
 use PHPUnit\Framework\TestCase;
 
 class ActualMimeTypeDbTest extends TestCase
@@ -41,7 +41,7 @@ class ActualMimeTypeDbTest extends TestCase
              */
             protected static function getNamespace(): string
             {
-                return 'Narrowspark\\Mimetypes\\Tests\\Fixture';
+                return 'Narrowspark\\MimeType\\Tests\\Fixture';
             }
         };
 

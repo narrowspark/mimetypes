@@ -1,33 +1,33 @@
 <?php
 declare(strict_types=1);
-namespace Narrowspark\Mimetypes\Tests;
+namespace Narrowspark\MimeType\Tests;
 
-use Narrowspark\Mimetypes\FileinfoMimeTypeGuesser;
+use Narrowspark\MimeType\MimeTypeFileInfoGuesser;
 use PHPUnit\Framework\TestCase;
 
-class FileinfoMimeTypeGuesserTest extends TestCase
+class MimeTypeFileInfoGuesserTest extends TestCase
 {
     /**
      * @requires extension fileinfo
      */
     public function testIsSupported(): void
     {
-        self::assertTrue(FileinfoMimeTypeGuesser::isSupported());
+        self::assertTrue(MimeTypeFileInfoGuesser::isSupported());
     }
 
     /**
      * @requires extension fileinfo
      */
-    public function testGuessExtensionWithFileinfoMimeTypeGuesser(): void
+    public function testGuessExtensionWithMimeTypeFileInfoGuesser(): void
     {
         self::assertSame(
             'inode/x-empty',
-            FileinfoMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
+            MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
         );
 
         self::assertSame(
             'image/gif',
-            FileinfoMimeTypeGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test.gif'))
+            MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test.gif'))
         );
     }
 

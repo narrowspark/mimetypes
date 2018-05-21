@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace Narrowspark\Mimetypes\Exception;
-
-use RuntimeException;
+namespace Narrowspark\MimeType\Exception;
 
 class AccessDeniedException extends RuntimeException
 {
@@ -13,6 +11,6 @@ class AccessDeniedException extends RuntimeException
      */
     public function __construct($path)
     {
-        parent::__construct(\sprintf('The file %s could not be accessed', $path));
+        parent::__construct(\sprintf('The file %s could not be accessed.', $path));
     }
 }
