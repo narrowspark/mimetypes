@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
-namespace Narrowspark\Mimetypes;
+namespace Narrowspark\MimeType;
 
 class MimeTypesList
 {
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Sun, 29 Apr 2018 21:41:09 GMT
+     * Last generated: Mon, 21 May 2018 19:58:08 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types

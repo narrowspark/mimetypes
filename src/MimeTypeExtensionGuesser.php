@@ -1,9 +1,21 @@
 <?php
 declare(strict_types=1);
-namespace Narrowspark\Mimetypes;
+namespace Narrowspark\MimeType;
 
-class MimeTypeByExtensionGuesser
+use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
+
+class MimeTypeExtensionGuesser implements MimeTypeGuesserContract
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
+     */
+    public static function isSupported(): bool
+    {
+        return true;
+    }
+
     /**
      * Guesses the mime type from extension.
      *

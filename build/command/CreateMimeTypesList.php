@@ -62,7 +62,7 @@ class CreateMimeTypesList
      */
     protected static function getNamespace(): string
     {
-        return 'Narrowspark\Mimetypes';
+        return 'Narrowspark\MimeType';
     }
 
     /**

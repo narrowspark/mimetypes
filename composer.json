@@ -4,7 +4,9 @@
     "description": "PHP MIME Types Guesser and extension mapping.",
     "keywords": [
         "narrowspark",
-        "mimetypes"
+        "mimetype",
+        "mimetypes",
+        "guesser"
     ],
     "license": "MIT",
     "authors": [
@@ -17,13 +19,14 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/polyfill-mbstring": "^1.5"
+        "symfony/polyfill-mbstring": "^1.8"
     },
     "require-dev": {
         "ext-fileinfo": "*",
         "narrowspark/php-cs-fixer-config": "^2.1",
         "phpstan/phpstan": "^0.9",
         "phpstan/phpstan-phpunit": "^0.9",
+        "phpstan/phpstan-strict-rules": "^0.9",
         "phpunit/phpunit": "^7.0"
     },
     "config": {
@@ -32,7 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Narrowspark\\Mimetypes\\": "src/"
+            "Narrowspark\\MimeType\\": "src/"
         },
         "exclude-from-classmap": [
             "tests/"
@@ -40,7 +43,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Narrowspark\\Mimetypes\\Tests\\": "tests/"
+            "Narrowspark\\MimeType\\Tests\\": "tests/"
         },
         "files": [
             "build/command/CreateMimeTypesList.php"

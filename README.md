@@ -27,9 +27,14 @@ composer require narrowspark/mimetypes
 Use
 ------------
 
+This mime type guesser has support for all OS supported guesser.
+
 ```php
 <?php
-    use Narrowspark\Mimetypes\MimeType;
+    use Narrowspark\MimeType\MimeType;
+    
+    // You can register custom guessers by calling the register() method
+    MimeType::register('CustomGuesser');
 
     return MimeType::guess('image.gif'); // returns image/gif
 ```
@@ -38,7 +43,7 @@ You looking for the full mime type array? Just use:
 
 ```php
 <?php
-    use Narrowspark\Mimetypes\MimeTypesList;
+    use Narrowspark\MimeType\MimeTypesList;
 
     return MimeTypesList::MIMES; // returns array
 ```
@@ -47,17 +52,17 @@ If you like to use the build in php mime type guesser, just use:
 
 ```php
 <?php
-    use Narrowspark\Mimetypes\FileinfoMimeTypeGuesser;
-    use Narrowspark\Mimetypes\FileBinaryMimeTypeGuesser;
-    use Narrowspark\Mimetypes\MimeTypeByExtensionGuesser;
+    use Narrowspark\MimeType\MimeTypeFileInfoGuesser;
+    use Narrowspark\MimeType\MimeTypeFileBinaryGuesser;
+    use Narrowspark\MimeType\MimeTypeExtensionGuesser;
 
     
     // Inspecting the file using finfo and relies on magic db files.
-    return FileinfoMimeTypeGuesser::guess('image.gif'); // returns image/gif
+    return MimeTypeFileInfoGuesser::guess('image.gif'); // returns image/gif
     // Inspecting the file using file -b --mime
-    return FileBinaryMimeTypeGuesser::guess('image.gif'); // returns image/gif
+    return MimeTypeFileBinaryGuesser::guess('image.gif'); // returns image/gif
     // Inspecting the file using mime type list
-    return MimeTypeByExtensionGuesser::guess('gif'); // returns image/gif
+    return MimeTypeExtensionGuesser::guess('gif'); // returns image/gif
 ```
 
 Contributing

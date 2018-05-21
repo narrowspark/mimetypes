@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
-namespace Narrowspark\Mimetypes;
+namespace Narrowspark\MimeType;
 
-use Narrowspark\Mimetypes\Exception\AccessDeniedException;
+use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
+use Narrowspark\MimeType\Exception\AccessDeniedException;
+use Narrowspark\MimeType\Exception\FileNotFoundException;
 
-class FileBinaryMimeTypeGuesser
+class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
 {
     /**
      * Private constructor; non-instantiable.
@@ -16,16 +18,14 @@ class FileBinaryMimeTypeGuesser
     }
 
     /**
-     * Returns whether this guesser is supported on the current OS.
-     *
-     * @return null|bool
+     * {@inheritdoc}
      */
-    public static function isSupported(): ?bool
+    public static function isSupported(): bool
     {
         static $supported = null;
 
         if ($supported !== null) {
-            return $supported;
+            return (bool) $supported;
         }
 
         if (DIRECTORY_SEPARATOR === '\\' || ! \function_exists('passthru') || ! \function_exists('escapeshellarg')) {
@@ -50,12 +50,16 @@ class FileBinaryMimeTypeGuesser
      *                     The command output must start with the mime type of the file.
      *                     Like: text/plain; charset=us-ascii
      *
-     * @throws \Narrowspark\Mimetypes\Exception\AccessDeniedException If the file could not be read
+     * @throws \Narrowspark\MimeType\Exception\AccessDeniedException If the file could not be read
      *
      * @return null|string
      */
     public static function guess(string $path, string $cmd = null): ?string
     {
+        if (! \is_file($path)) {
+            throw new FileNotFoundException($path);
+        }
+
         if (! \is_readable($path)) {
             throw new AccessDeniedException($path);
         }
