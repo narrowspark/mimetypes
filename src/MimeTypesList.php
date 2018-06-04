@@ -7,7 +7,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Mon, 21 May 2018 19:58:08 GMT
+     * Last generated: Mon, 04 Jun 2018 05:59:27 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -72,6 +72,9 @@ class MimeTypesList
             0 => 'application/dssc+xml',
         ],
         'ecma' => [
+            0 => 'application/ecmascript',
+        ],
+        'es' => [
             0 => 'application/ecmascript',
         ],
         'emma' => [
@@ -613,6 +616,9 @@ class MimeTypesList
         ],
         'cdy' => [
             0 => 'application/vnd.cinderella',
+        ],
+        'csl' => [
+            0 => 'application/vnd.citationstyles.style+xml',
         ],
         'cla' => [
             0 => 'application/vnd.claymore',
