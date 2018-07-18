@@ -7,7 +7,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Mon, 04 Jun 2018 05:59:27 GMT
+     * Last generated: Wed, 18 Jul 2018 21:14:29 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -88,10 +88,6 @@ class MimeTypesList
         ],
         'pfr' => [
             0 => 'application/font-tdpfr',
-        ],
-        'woff' => [
-            0 => 'application/font-woff',
-            1 => 'font/woff',
         ],
         'geojson' => [
             0 => 'application/geo+json',
@@ -401,6 +397,9 @@ class MimeTypesList
             0 => 'application/raml+yaml',
         ],
         'rdf' => [
+            0 => 'application/rdf+xml',
+        ],
+        'owl' => [
             0 => 'application/rdf+xml',
         ],
         'rif' => [
@@ -2526,6 +2525,9 @@ class MimeTypesList
         ],
         'ttf' => [
             0 => 'font/ttf',
+        ],
+        'woff' => [
+            0 => 'font/woff',
         ],
         'woff2' => [
             0 => 'font/woff2',

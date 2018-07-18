@@ -44,7 +44,7 @@ final class MimeType
             \array_unshift(self::$guessers, $guesser);
         }
 
-        throw new RuntimeException(\sprintf('You guesser should implement the [' . MimeTypeGuesserContract::class . '].', $guesser));
+        throw new RuntimeException(\sprintf('You guesser [%s] should implement the [\%s].', $guesser, MimeTypeGuesserContract::class));
     }
 
     /**
@@ -59,7 +59,9 @@ final class MimeType
      */
     public static function guess(string $guess): ?string
     {
-        if (! $guessers = self::getGuessers()) {
+        $guessers = self::getGuessers();
+
+        if (\count($guessers) === 0) {
             $msg = 'Unable to guess the mime type as no guessers are available';
 
             if (! MimeTypeFileInfoGuesser::isSupported()) {

@@ -7,11 +7,14 @@ use Narrowspark\MimeType\MimeTypesList;
 use Narrowspark\MimeType\Tests\Fixture\ActualMimeTypeDbList;
 use PHPUnit\Framework\TestCase;
 
-class ActualMimeTypeDbTest extends TestCase
+/**
+ * @internal
+ */
+final class ActualMimeTypeDbTest extends TestCase
 {
     public const PATH = __DIR__ . '/Fixture/ActualMimeTypeDbList.php';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -45,10 +48,10 @@ class ActualMimeTypeDbTest extends TestCase
             }
         };
 
-        self::assertSame(1, $create::create());
+        static::assertSame(1, $create::create());
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -57,6 +60,6 @@ class ActualMimeTypeDbTest extends TestCase
 
     public function testDbIsActual(): void
     {
-        self::assertSame(ActualMimeTypeDbList::MIMES, MimeTypesList::MIMES);
+        static::assertSame(ActualMimeTypeDbList::MIMES, MimeTypesList::MIMES);
     }
 }

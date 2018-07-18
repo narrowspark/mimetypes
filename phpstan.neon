@@ -1,0 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    autoload_directories:
+        - %currentWorkingDirectory%/src
+
+    excludes_analyse:
+        - %currentWorkingDirectory%/src/MimeTypesList.php
+        - %currentWorkingDirectory%/src/MimeTypeExtensionGuesser.php

@@ -5,14 +5,17 @@ namespace Narrowspark\MimeType\Tests;
 use Narrowspark\MimeType\MimeTypeFileInfoGuesser;
 use PHPUnit\Framework\TestCase;
 
-class MimeTypeFileInfoGuesserTest extends TestCase
+/**
+ * @internal
+ */
+final class MimeTypeFileInfoGuesserTest extends TestCase
 {
     /**
      * @requires extension fileinfo
      */
     public function testIsSupported(): void
     {
-        self::assertTrue(MimeTypeFileInfoGuesser::isSupported());
+        static::assertTrue(MimeTypeFileInfoGuesser::isSupported());
     }
 
     /**
@@ -20,12 +23,12 @@ class MimeTypeFileInfoGuesserTest extends TestCase
      */
     public function testGuessExtensionWithMimeTypeFileInfoGuesser(): void
     {
-        self::assertSame(
+        static::assertSame(
             'inode/x-empty',
             MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
         );
 
-        self::assertSame(
+        static::assertSame(
             'image/gif',
             MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test.gif'))
         );

@@ -29,6 +29,10 @@ class MimeTypeExtensionGuesser implements MimeTypeGuesserContract
     {
         $extension = \mb_strtolower($extension);
 
-        return isset(MimeTypesList::MIMES[$extension]) ? MimeTypesList::MIMES[$extension][0] : null;
+        if (isset(MimeTypesList::MIMES[$extension])) {
+            return MimeTypesList::MIMES[$extension][0];
+        }
+
+        return null;
     }
 }

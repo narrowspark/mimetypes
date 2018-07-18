@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace Narrowspark\MimeType;
 
-use finfo;
 use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
 use Narrowspark\MimeType\Exception\AccessDeniedException;
 use Narrowspark\MimeType\Exception\FileNotFoundException;
@@ -66,15 +65,15 @@ class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
         }
 
         if (self::$magicFile !== null) {
-            $finfo = new finfo(\FILEINFO_MIME_TYPE, self::$magicFile);
+            $finfo = \finfo_open(\FILEINFO_MIME_TYPE, self::$magicFile);
         } else {
-            $finfo = new finfo(\FILEINFO_MIME_TYPE);
+            $finfo = \finfo_open(\FILEINFO_MIME_TYPE);
         }
 
-        if (! $finfo) {
-            return null;
-        }
+        $type = \finfo_file($finfo, $filename);
 
-        return $finfo->file($filename);
+        \finfo_close($finfo);
+
+        return $type ?? null;
     }
 }

@@ -4,13 +4,17 @@ namespace Narrowspark\MimeType\Tests;
 
 use Narrowspark\MimeType\Exception\AccessDeniedException;
 use Narrowspark\MimeType\Exception\FileNotFoundException;
+use Narrowspark\MimeType\Exception\RuntimeException;
 use Narrowspark\MimeType\MimeType;
 use Narrowspark\MimeType\MimeTypeExtensionGuesser;
 use Narrowspark\MimeType\MimeTypeFileBinaryGuesser;
 use Narrowspark\MimeType\MimeTypeFileInfoGuesser;
 use PHPUnit\Framework\TestCase;
 
-class MimeTypeTest extends TestCase
+/**
+ * @internal
+ */
+final class MimeTypeTest extends TestCase
 {
     /**
      * {@inheritdoc}
@@ -23,23 +27,22 @@ class MimeTypeTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \Narrowspark\MimeType\Exception\RuntimeException
-     * @expectedExceptionMessage You guesser should implement the [Narrowspark\MimeType\Contract\MimeTypeGuesser].
-     */
     public function testRegister(): void
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('You guesser [Narrowspark\\MimeType\\Tests\\MimeTypeTest] should implement the [\\Narrowspark\\MimeType\\Contract\\MimeTypeGuesser].');
+
         MimeType::register(self::class);
     }
 
     public function testGuess(): void
     {
-        self::assertSame(
+        static::assertSame(
             'application/vnd.lotus-1-2-3',
             MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/lotus.123'))
         );
 
-        self::assertSame(
+        static::assertSame(
             'application/xml',
             MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/meta.xml'))
         );
@@ -49,20 +52,20 @@ class MimeTypeTest extends TestCase
     {
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test');
 
-        self::assertSame('image/gif', MimeTypeFileInfoGuesser::guess($path));
+        static::assertSame('image/gif', MimeTypeFileInfoGuesser::guess($path));
 
         if (! MimeTypeFileBinaryGuesser::isSupported()) {
-            self::assertSame('image/gif', MimeTypeFileBinaryGuesser::guess($path));
+            static::assertSame('image/gif', MimeTypeFileBinaryGuesser::guess($path));
         }
     }
 
     public function testGuessExtensionWithMimeTypeFileBinaryGuesser(): void
     {
         if (! MimeTypeFileBinaryGuesser::isSupported()) {
-            self::markTestSkipped('Can only run on a *nix system');
+            static::markTestSkipped('Can only run on a *nix system');
         }
 
-        self::assertSame(
+        static::assertSame(
             'application/octet-stream',
             MimeTypeFileBinaryGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/latlon.bin'))
         );
@@ -75,7 +78,7 @@ class MimeTypeTest extends TestCase
         try {
             MimeType::guess($path);
         } catch (FileNotFoundException $exception) {
-            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            static::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
     }
 
@@ -86,13 +89,13 @@ class MimeTypeTest extends TestCase
         try {
             MimeType::guess($path);
         } catch (FileNotFoundException $exception) {
-            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            static::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
 
         try {
             MimeTypeFileInfoGuesser::guess($path);
         } catch (FileNotFoundException $exception) {
-            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            static::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
     }
 
@@ -100,34 +103,34 @@ class MimeTypeTest extends TestCase
     {
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/.unknownextension');
 
-        self::assertSame('application/octet-stream', MimeType::guess($path));
-        self::assertSame('application/octet-stream', MimeTypeFileInfoGuesser::guess($path));
+        static::assertSame('application/octet-stream', MimeType::guess($path));
+        static::assertSame('application/octet-stream', MimeTypeFileInfoGuesser::guess($path));
 
         if (! MimeTypeFileBinaryGuesser::isSupported()) {
-            self::assertSame('application/octet-stream', MimeTypeFileBinaryGuesser::guess($path));
+            static::assertSame('application/octet-stream', MimeTypeFileBinaryGuesser::guess($path));
         }
     }
 
     public function testGuessWithNonReadablePath(): void
     {
-        if (DIRECTORY_SEPARATOR === '\\') {
-            self::markTestSkipped('Can not verify chmod operations on Windows');
+        if (\DIRECTORY_SEPARATOR === '\\') {
+            static::markTestSkipped('Can not verify chmod operations on Windows');
         }
 
         if (! \getenv('USER') || 'root' === \getenv('USER')) {
-            self::markTestSkipped('This test will fail if run under superuser');
+            static::markTestSkipped('This test will fail if run under superuser');
         }
 
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete');
         \touch($path);
         @\chmod($path, 0333);
 
-        if (\mb_substr(\sprintf('%o', \fileperms($path)), -4) == '0333') {
+        if (\mb_substr(\sprintf('%o', \fileperms($path)), -4) === '0333') {
             $this->expectException(AccessDeniedException::class);
 
             MimeType::guess($path);
         } else {
-            self::markTestSkipped('Can not verify chmod operations, change of file permissions failed');
+            static::markTestSkipped('Can not verify chmod operations, change of file permissions failed');
         }
     }
 
@@ -139,7 +142,7 @@ class MimeTypeTest extends TestCase
      */
     public function testGuessMimeTypeFromExtension(string $extension, ?string $mimeType): void
     {
-        self::assertSame(
+        static::assertSame(
             $mimeType,
             MimeTypeExtensionGuesser::guess($extension)
         );

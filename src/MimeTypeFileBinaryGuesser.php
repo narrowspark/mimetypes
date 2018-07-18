@@ -28,14 +28,14 @@ class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
             return (bool) $supported;
         }
 
-        if (DIRECTORY_SEPARATOR === '\\' || ! \function_exists('passthru') || ! \function_exists('escapeshellarg')) {
+        if (\DIRECTORY_SEPARATOR === '\\' || ! \function_exists('passthru') || ! \function_exists('escapeshellarg')) {
             return $supported = false;
         }
 
         \ob_start();
         \passthru('command -v file', $exitStatus);
 
-        $binPath = \trim(\ob_get_clean());
+        $binPath = \trim((string) \ob_get_clean());
 
         return $supported = $exitStatus === 0 && '' !== $binPath;
     }
@@ -67,7 +67,7 @@ class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
         if ($cmd === null) {
             $cmd = 'file -b --mime %s';
 
-            if (\mb_strtolower(\mb_substr(PHP_OS, 0, 3)) !== 'win') {
+            if (\mb_strtolower(\mb_substr(\PHP_OS, 0, 3)) !== 'win') {
                 $cmd .= ' 2>/dev/null';
             }
         }
@@ -83,9 +83,9 @@ class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
             return null;
         }
 
-        $type = \trim(\ob_get_clean());
+        $type = \trim((string) \ob_get_clean());
 
-        if (! \preg_match('#^([a-z0-9\-]+/[a-z0-9\-\.]+)#i', $type, $match)) {
+        if (\preg_match('#^([a-z0-9\-]+/[a-z0-9\-\.]+)#i', $type, $match) === false) {
             // it's not a type, but an error message
             return null;
         }
