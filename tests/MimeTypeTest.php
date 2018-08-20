@@ -151,7 +151,7 @@ final class MimeTypeTest extends TestCase
     /**
      * @return array
      */
-    public function extensionDataProvider()
+    public function extensionDataProvider(): array
     {
         return [
             ['jpg', 'image/jpeg'],

@@ -7,7 +7,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Wed, 18 Jul 2018 21:14:29 GMT
+     * Last generated: Mon, 20 Aug 2018 21:33:44 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -583,8 +583,17 @@ class MimeTypesList
         'mpkg' => [
             0 => 'application/vnd.apple.installer+xml',
         ],
+        'keynote' => [
+            0 => 'application/vnd.apple.keynote',
+        ],
         'm3u8' => [
             0 => 'application/vnd.apple.mpegurl',
+        ],
+        'numbers' => [
+            0 => 'application/vnd.apple.numbers',
+        ],
+        'pages' => [
+            0 => 'application/vnd.apple.pages',
         ],
         'pkpass' => [
             0 => 'application/vnd.apple.pkpass',
@@ -2077,9 +2086,11 @@ class MimeTypesList
         ],
         'wmf' => [
             0 => 'application/x-msmetafile',
+            1 => 'image/wmf',
         ],
         'emf' => [
             0 => 'application/x-msmetafile',
+            1 => 'image/emf',
         ],
         'emz' => [
             0 => 'application/x-msmetafile',
@@ -2532,6 +2543,9 @@ class MimeTypesList
         'woff2' => [
             0 => 'font/woff2',
         ],
+        'exr' => [
+            0 => 'image/aces',
+        ],
         'apng' => [
             0 => 'image/apng',
         ],
@@ -2542,6 +2556,12 @@ class MimeTypesList
         'cgm' => [
             0 => 'image/cgm',
         ],
+        'drle' => [
+            0 => 'image/dicom-rle',
+        ],
+        'fits' => [
+            0 => 'image/fits',
+        ],
         'g3' => [
             0 => 'image/g3fax',
         ],
@@ -2550,6 +2570,9 @@ class MimeTypesList
         ],
         'ief' => [
             0 => 'image/ief',
+        ],
+        'jls' => [
+            0 => 'image/jls',
         ],
         'jp2' => [
             0 => 'image/jp2',
@@ -2585,6 +2608,9 @@ class MimeTypesList
         'btif' => [
             0 => 'image/prs.btif',
         ],
+        'pti' => [
+            0 => 'image/prs.pti',
+        ],
         'sgi' => [
             0 => 'image/sgi',
         ],
@@ -2594,14 +2620,23 @@ class MimeTypesList
         'svgz' => [
             0 => 'image/svg+xml',
         ],
-        'tiff' => [
-            0 => 'image/tiff',
+        't38' => [
+            0 => 'image/t38',
         ],
         'tif' => [
             0 => 'image/tiff',
         ],
+        'tiff' => [
+            0 => 'image/tiff',
+        ],
+        'tfx' => [
+            0 => 'image/tiff-fx',
+        ],
         'psd' => [
             0 => 'image/vnd.adobe.photoshop',
+        ],
+        'azv' => [
+            0 => 'image/vnd.airzip.accelerator.azv',
         ],
         'uvi' => [
             0 => 'image/vnd.dece.graphic',
@@ -2646,6 +2681,10 @@ class MimeTypesList
         'rlc' => [
             0 => 'image/vnd.fujixerox.edmics-rlc',
         ],
+        'ico' => [
+            0 => 'image/vnd.microsoft.icon',
+            1 => 'image/x-icon',
+        ],
         'mdi' => [
             0 => 'image/vnd.ms-modi',
         ],
@@ -2655,11 +2694,21 @@ class MimeTypesList
         'npx' => [
             0 => 'image/vnd.net-fpx',
         ],
+        'tap' => [
+            0 => 'image/vnd.tencent.tap',
+        ],
+        'vtf' => [
+            0 => 'image/vnd.valve.source.texture',
+        ],
         'wbmp' => [
             0 => 'image/vnd.wap.wbmp',
         ],
         'xif' => [
             0 => 'image/vnd.xiff',
+        ],
+        'pcx' => [
+            0 => 'image/vnd.zbrush.pcx',
+            1 => 'image/x-pcx',
         ],
         'webp' => [
             0 => 'image/webp',
@@ -2688,17 +2737,11 @@ class MimeTypesList
         'fh7' => [
             0 => 'image/x-freehand',
         ],
-        'ico' => [
-            0 => 'image/x-icon',
-        ],
         'jng' => [
             0 => 'image/x-jng',
         ],
         'sid' => [
             0 => 'image/x-mrsid-image',
-        ],
-        'pcx' => [
-            0 => 'image/x-pcx',
         ],
         'pic' => [
             0 => 'image/x-pict',
