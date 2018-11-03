@@ -23,7 +23,7 @@
     },
     "require-dev": {
         "ext-fileinfo": "*",
-        "narrowspark/coding-standard": "^1.1.2",
+        "narrowspark/coding-standard": "^1.4.0",
         "phpunit/phpunit": "^7.2.0"
     },
     "config": {

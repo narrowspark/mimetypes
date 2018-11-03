@@ -6,6 +6,7 @@
 coverage.xml
 
 composer.phar
+composer.lock
 
 /build/logs
 /vendor

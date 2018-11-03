@@ -15,7 +15,7 @@ final class MimeTypeFileInfoGuesserTest extends TestCase
      */
     public function testIsSupported(): void
     {
-        static::assertTrue(MimeTypeFileInfoGuesser::isSupported());
+        $this->assertTrue(MimeTypeFileInfoGuesser::isSupported());
     }
 
     /**
@@ -23,12 +23,12 @@ final class MimeTypeFileInfoGuesserTest extends TestCase
      */
     public function testGuessExtensionWithMimeTypeFileInfoGuesser(): void
     {
-        static::assertSame(
+        $this->assertSame(
             'inode/x-empty',
             MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
         );
 
-        static::assertSame(
+        $this->assertSame(
             'image/gif',
             MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test.gif'))
         );

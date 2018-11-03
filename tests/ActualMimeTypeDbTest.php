@@ -60,6 +60,6 @@ final class ActualMimeTypeDbTest extends TestCase
 
     public function testDbIsActual(): void
     {
-        static::assertSame(ActualMimeTypeDbList::MIMES, MimeTypesList::MIMES);
+        $this->assertSame(ActualMimeTypeDbList::MIMES, MimeTypesList::MIMES);
     }
 }
