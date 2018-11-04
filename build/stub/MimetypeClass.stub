@@ -5,6 +5,15 @@ namespace {dummyNamespace};
 class {dummyClass}
 {
     /**
+     * Version of the mime db package.
+     *
+     * @see https://npmjs.org/package/mime-db
+     *
+     * @var string
+     */
+    public const MIME_DB_VERSION = '{dummyMimeDbVersion}';
+
+    /**
      * A map of file extensions and their mime types.
      *
      * Last generated: {date}

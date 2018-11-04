@@ -5,6 +5,7 @@ env:
   global:
     - TEST="./vendor/bin/phpunit --verbose"
     - COMPOSER_UP="composer update --no-interaction --prefer-dist --no-progress --profile --no-suggest"
+    - secure: "d6pfTs4EDyq5g/3P8oET82fSFMlqbLonkNO8JN+BWlKgmVX4rWaE1fDwRAaAB1TByIgg46A+cvDbbCYo6H19yVbZyYRsDFMIYLwgR4ozj4fdYWsiffrEx/NGwKVSWzSMDEqAmslrQ647Q4XiwISiQbbtii/5HaG6EYAikACOM0Jggm1IkR/W8jEQh5muFvyMzczz3xsxFVcIe4/9nz0ARR2eKM0aiPJKhvQREl62/Lr8eeILxRq7Mwaf1Dfq/CkfldCNjW7kOBK/+f4S40AQagYMrn8E0lyPfj/zlPhAkp/dqmKFDnTg7/cwOsfGTyH7SI6eiWU70TUKn8SoqxUlL7qS0iepO3Usc4k/wTfTOaJkeRD5ZDN+/A5n99VWshw02IKBwqR+DqV1IFpVrpxoT6c76kyt9XbkijlgG4nxU24aSKgqGZciPwrPnIu0UN92o6OuhsHswIGnSSSs07xELIoXUT7Ynu/MUkAHsrsquSQQAcbOqQOrkSgaEsmUza+I5k2bZqfYuYq0wYBFCPLUV1EXZM13bB4bVK6FKhdBDItfjGUtAvOr51yiOBLRR3TywDhmvqT2RHjtG3NiwVjzK4KmunhJdumqRqOphKx4KfSK69gNOJ5jczV21Sk09Il1ddyK8hVI9QLVncwVnoQWEwUrfYijhS7WOWTesOPE4qQ="
 
 cache:
   yarn: true
@@ -30,15 +31,19 @@ jobs:
     - php: 7.3
   include:
     - stage: Test
+      if: NOT type = cron
       php: 7.1
       env: REMOVE_XDEBUG=true
     - stage: Test
+      if: NOT type = cron
       php: 7.2
       env: REMOVE_XDEBUG=true
     - stage: Test
+      if: NOT type = cron
       php: 7.3
       env: REMOVE_XDEBUG=true
     - stage: Test
+      if: NOT type = cron
       php: nightly
       env: REMOVE_XDEBUG=true
 
@@ -63,6 +68,24 @@ jobs:
         - bash -xc "$TEST -c ./phpunit.xml.dist --coverage-clover=coverage.xml"
       after_success:
         - bash <(curl -s https://codecov.io/bash)
+
+    - stage: Build
+      if: type = cron
+      php: 7.2
+      env: REMOVE_XDEBUG=true
+      before_script:
+        - stty cols 120
+        - |
+          git config --global user.email "$GH_USER_EMAIL"
+          git config --global user.name "$GH_USER_NAME"
+          git remote set-url origin git@github.com:narrowspark/mimetypes.git
+        - |
+          chmod a+x ./build/travis/set_up_ssh.sh
+          ./build/travis/set_up_ssh.sh
+      script:
+        - php cerebro build
+        - php cerebro commit
+        - rm -fr ./build/git/*
 
 notifications:
   email:

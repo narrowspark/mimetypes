@@ -22,8 +22,12 @@
     },
     "require-dev": {
         "ext-fileinfo": "*",
+        "ext-json": "*",
+        "mindscreen/yarnlock": "^1.0",
         "narrowspark/coding-standard": "^1.4.0",
-        "phpunit/phpunit": "^7.2.0"
+        "phpunit/phpunit": "^7.2.0",
+        "symfony/process": "^4.1",
+        "viserio/console": "^1.0@dev"
     },
     "config": {
         "optimize-autoloader": true,
@@ -39,16 +43,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Narrowspark\\MimeType\\Tests\\": "tests/"
+            "Narrowspark\\MimeType\\Tests\\": "tests/",
+            "Narrowspark\\MimeType\\Build\\Command\\": "build/command/"
         },
         "files": [
-            "build/command/CreateMimeTypesList.php"
+            "build/command/BuildCommand.php"
         ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "build": "@php -r \"require 'build/command/CreateMimeTypesList.php'; CreateMimeTypesList::create();\"",
         "coverage": "phpunit --coverage-html=\"build/logs\"",
         "cs": "php-cs-fixer fix",
         "phpstan": "phpstan analyse -c phpstan.neon -l 7 src --memory-limit=-1",

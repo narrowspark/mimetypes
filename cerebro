@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Viserio\Component\Console\Application;
+
+set_time_limit(0);
+
+require_once \realpath(__DIR__) . '/vendor/autoload.php';
+
+$application = new Application();
+$application->add(new \Narrowspark\MimeType\Build\Command\BuildCommand());
+$application->add(new \Narrowspark\MimeType\Build\Command\CommitCommand());
+
+$status = $application->run(new ArgvInput(), new ConsoleOutput());
+
+exit($status);

@@ -2,9 +2,8 @@
 declare(strict_types=1);
 namespace Narrowspark\MimeType\Tests;
 
-use CreateMimeTypesList;
+use Mindscreen\YarnLock\YarnLock;
 use Narrowspark\MimeType\MimeTypesList;
-use Narrowspark\MimeType\Tests\Fixture\ActualMimeTypeDbList;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,54 +11,10 @@ use PHPUnit\Framework\TestCase;
  */
 final class ActualMimeTypeDbTest extends TestCase
 {
-    public const PATH = __DIR__ . '/Fixture/ActualMimeTypeDbList.php';
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $create = new class() extends CreateMimeTypesList {
-            /**
-             * @return array
-             */
-            protected static function getFilePaths(): array
-            {
-                [$stubFilePath, $outputFilePath, $mimeDbPath] = parent::getFilePaths();
-
-                $outputFilePath = ActualMimeTypeDbTest::PATH;
-
-                return [$stubFilePath, $outputFilePath, $mimeDbPath];
-            }
-
-            /**
-             * @return string
-             */
-            protected static function getClassName(): string
-            {
-                return 'ActualMimeTypeDbList';
-            }
-
-            /**
-             * @return string
-             */
-            protected static function getNamespace(): string
-            {
-                return 'Narrowspark\\MimeType\\Tests\\Fixture';
-            }
-        };
-
-        static::assertSame(1, $create::create());
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        \unlink(ActualMimeTypeDbTest::PATH);
-    }
-
     public function testDbIsActual(): void
     {
-        $this->assertSame(ActualMimeTypeDbList::MIMES, MimeTypesList::MIMES);
+        $yarnLock = YarnLock::fromString((string) \file_get_contents(\dirname(__DIR__, 1) . \DIRECTORY_SEPARATOR . 'yarn.lock'));
+
+        $this->assertSame($yarnLock->getPackage('mime-db')->getVersion(), MimeTypesList::MIME_DB_VERSION);
     }
 }
