@@ -74,6 +74,13 @@ jobs:
       if: type = cron
       php: 7.2
       env: REMOVE_XDEBUG=true
+      install:
+        - yarn install
+        - composer global require hirak/prestissimo
+        - |
+          cd ./build/command
+          $COMPOSER_UP
+          cd ../..
       before_script:
         - stty cols 120
         - |
@@ -83,10 +90,6 @@ jobs:
         - |
           chmod a+x ./build/travis/set_up_ssh.sh
           ./build/travis/set_up_ssh.sh
-        - |
-          cd ./build/command
-          $COMPOSER_UP
-          cd ../..
       script:
         - php ./build/command/cerebro build
         - php ./build/command/cerebro commit
