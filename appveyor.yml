@@ -9,10 +9,6 @@ environment:
   matrix:
   - dependencies: basic
     PHP_VERSION: 7.2
-  - dependencies: high
-    PHP_VERSION: 7.2
-  - dependencies: lowest
-    PHP_VERSION: 7.2
 
 matrix:
   fast_finish: true
