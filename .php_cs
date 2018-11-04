@@ -5,7 +5,7 @@ $config = new Config();
 $config->getFinder()
     ->files()
     ->in(__DIR__)
-    ->exclude('build')
+    ->exclude('build/stub')
     ->exclude('vendor')
     ->notPath('tests/Fixture/ActualMimeTypeDbList.php')
     ->name('*.php')

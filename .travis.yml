@@ -82,9 +82,13 @@ jobs:
         - |
           chmod a+x ./build/travis/set_up_ssh.sh
           ./build/travis/set_up_ssh.sh
+        - |
+          cd ./build/command
+          $COMPOSER_UP
+          cd ../..
       script:
-        - php cerebro build
-        - php cerebro commit
+        - php ./build/command/cerebro build
+        - php ./build/command/cerebro commit
         - rm -fr ./build/git/*
 
 notifications:

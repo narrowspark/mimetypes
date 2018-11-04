@@ -2,8 +2,8 @@
 declare(strict_types=1);
 namespace Narrowspark\MimeType\Build\Command;
 
+use Mindscreen\YarnLock\YarnLock;
 use Viserio\Component\Console\Command\AbstractCommand;
-use \Mindscreen\YarnLock\YarnLock;
 
 class BuildCommand extends AbstractCommand
 {
@@ -24,6 +24,13 @@ class BuildCommand extends AbstractCommand
      * {@inheritdoc}
      */
     protected $description = 'Builds the MimeTypesList class';
+
+    /**
+     * Path to the root dir path.
+     *
+     * @var string
+     */
+    private $rootPath;
 
     /**
      * Path to the stub file.
@@ -56,26 +63,15 @@ class BuildCommand extends AbstractCommand
     /**
      * {@inheritdoc}
      */
-    protected function configure(): void
-    {
-        $rootPath = \dirname(__DIR__, 2);
-
-        $this->stubFilePath   = \dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . 'stub' . DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
-        $this->outputFilePath = $rootPath . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MimeTypesList.php';
-        $this->mimeDbPath     = $rootPath . DIRECTORY_SEPARATOR . 'node_modules' . DIRECTORY_SEPARATOR . 'mime-db' . DIRECTORY_SEPARATOR . 'db.json';
-        $this->yarnLock       = YarnLock::fromString((string) \file_get_contents($rootPath . DIRECTORY_SEPARATOR . 'yarn.lock'));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function handle(): int
     {
         $mimeTypeList = self::createMimeArray(\file_get_contents($this->mimeDbPath));
 
         $this->info('Generating the MimeTypesList class.');
 
-        $output = \file_put_contents(
+        $version = $this->yarnLock->getPackage('mime-db')->getVersion();
+
+        $mimeTypeListOutput = \file_put_contents(
             $this->outputFilePath,
             \str_replace(
                 [
@@ -83,20 +79,40 @@ class BuildCommand extends AbstractCommand
                     '{dummyClass}',
                     '{dummyNamespace}',
                     '{date}',
-                    '{dummyMimeDbVersion}'
+                    '{dummyMimeDbVersion}',
                 ],
                 [
                     self::getPrettyPrintArray($mimeTypeList),
                     $this->option('classname'),
                     $this->option('namespace'),
-                    \gmdate('D, d M Y H:i:s T', time()),
-                    $this->yarnLock->getPackage('mime-db')->getVersion()
+                    \gmdate('D, d M Y H:i:s T', \time()),
+                    $version,
                 ],
                 \file_get_contents($this->stubFilePath)
             )
         );
 
-        return (int) ($output !== false);
+        $packageJsonPath = $this->rootPath . \DIRECTORY_SEPARATOR . 'package.json';
+        $packageJson     = \json_decode(\file_get_contents($packageJsonPath), true);
+
+        $packageJson['dependencies']['mime-db'] = '^' . $version;
+
+        $packageJsonPathOutput = \file_put_contents($packageJsonPath, \json_encode($packageJson, \JSON_PRETTY_PRINT));
+
+        return (int) (($mimeTypeListOutput === false) && ($packageJsonPathOutput === false));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure(): void
+    {
+        $this->stubFilePath   = \dirname(__DIR__, 1) . \DIRECTORY_SEPARATOR . 'stub' . \DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
+
+        $this->rootPath       = \dirname(__DIR__, 2);
+        $this->outputFilePath = $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php';
+        $this->mimeDbPath     = $this->rootPath . \DIRECTORY_SEPARATOR . 'node_modules' . \DIRECTORY_SEPARATOR . 'mime-db' . \DIRECTORY_SEPARATOR . 'db.json';
+        $this->yarnLock       = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
     }
 
     /**
@@ -123,11 +139,11 @@ class BuildCommand extends AbstractCommand
         );
 
         $combinedArray = \ array_combine(\array_keys($mimeDb), $mimeDbExtensions);
-        $array = [];
+        $array         = [];
 
         foreach ($combinedArray as $type => $extensions) {
             foreach ($extensions as $extension) {
-                if (!isset($array[$extension])) {
+                if (! isset($array[$extension])) {
                     $array[$extension] = \array_unique([$type]);
                 } else {
                     $array[$extension] = \array_unique(\array_merge($array[$extension], [$type]));

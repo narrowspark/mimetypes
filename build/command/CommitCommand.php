@@ -54,7 +54,7 @@ class CommitCommand extends AbstractCommand
 
         $this->info('Making a commit to narrowspark/mimetypes.');
 
-        $filesToCommit = ' -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MimeTypesList.php  -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock';
+        $filesToCommit = ' -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php  -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock';
 
         $gitCommitProcess = new Process(
             'git commit -m "Automatically updated on ' . (new \DateTimeImmutable('now'))->format(\DateTimeImmutable::RFC7231) . '"' . $filesToCommit
@@ -80,7 +80,7 @@ class CommitCommand extends AbstractCommand
 
         $this->info($gitCommitProcess->getOutput());
 
-        $gitGetLastTagProcess = new Process(sprintf('git describe --abbrev=0 --tags'));
+        $gitGetLastTagProcess = new Process(\sprintf('git describe --abbrev=0 --tags'));
         $gitGetLastTagProcess->run();
 
         if (! $gitGetLastTagProcess->isSuccessful()) {
@@ -89,9 +89,9 @@ class CommitCommand extends AbstractCommand
             return 1;
         }
 
-        $tag = ltrim($gitGetLastTagProcess->getOutput(), 'v') + 0.1;
+        $tag = \ltrim($gitGetLastTagProcess->getOutput(), 'v') + 0.1;
 
-        $gitCreateTagProcess = new Process(sprintf('git tag -a %s -m \'%s\'', $tag, 'updated mime-db to ' . $mimeDbVersion));
+        $gitCreateTagProcess = new Process(\sprintf('git tag -a %s -m \'%s\'', $tag, 'updated mime-db to ' . $mimeDbVersion));
         $gitCreateTagProcess->run();
 
         if (! $gitCreateTagProcess->isSuccessful()) {
@@ -102,7 +102,7 @@ class CommitCommand extends AbstractCommand
 
         $this->info($gitCreateTagProcess->getOutput());
 
-        $gitPushTagProcess = new Process(sprintf('git push origin %s --quiet', $tag));
+        $gitPushTagProcess = new Process(\sprintf('git push origin %s --quiet', $tag));
         $gitPushTagProcess->run();
 
         if (! $gitPushTagProcess->isSuccessful()) {
@@ -122,6 +122,6 @@ class CommitCommand extends AbstractCommand
     protected function configure(): void
     {
         $this->rootPath = \dirname(__DIR__, 2);
-        $this->yarnLock = YarnLock::fromString((string) \file_get_contents($this->rootPath . DIRECTORY_SEPARATOR . 'yarn.lock'));
+        $this->yarnLock = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
     }
 }

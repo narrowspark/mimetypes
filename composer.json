@@ -23,11 +23,8 @@
     "require-dev": {
         "ext-fileinfo": "*",
         "ext-json": "*",
-        "mindscreen/yarnlock": "^1.0",
         "narrowspark/coding-standard": "^1.4.0",
-        "phpunit/phpunit": "^7.2.0",
-        "symfony/process": "^4.1",
-        "viserio/console": "^1.0@dev"
+        "phpunit/phpunit": "^7.2.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -43,8 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Narrowspark\\MimeType\\Tests\\": "tests/",
-            "Narrowspark\\MimeType\\Build\\Command\\": "build/command/"
+            "Narrowspark\\MimeType\\Tests\\": "tests/"
         },
         "files": [
             "build/command/BuildCommand.php"
