@@ -24,7 +24,8 @@
         "ext-fileinfo": "*",
         "ext-json": "*",
         "narrowspark/coding-standard": "^1.4.0",
-        "phpunit/phpunit": "^7.2.0"
+        "phpunit/phpunit": "^7.2.0",
+        "mindscreen/yarnlock": "^1.0.1"
     },
     "config": {
         "optimize-autoloader": true,
@@ -41,10 +42,7 @@
     "autoload-dev": {
         "psr-4": {
             "Narrowspark\\MimeType\\Tests\\": "tests/"
-        },
-        "files": [
-            "build/command/BuildCommand.php"
-        ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
