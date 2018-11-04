@@ -3,7 +3,7 @@ platform:
   - x64
   - x86
 clone_depth: 1
-clone_folder: C:\projects\automatic
+clone_folder: C:\projects\mimetypes
 
 environment:
   matrix:
@@ -21,7 +21,7 @@ cache:
   # Cache php install
   - C:\tools\php -> .appveyor.yml
   # Cache composer
-  - C:\projects\automatic\vendor -> composer.json
+  - C:\projects\mimetypes\vendor -> composer.json
   - '%LOCALAPPDATA%\Composer\files -> composer.json'
   - node_modules
 
@@ -55,7 +55,7 @@ install:
   - IF %PHP%==1 echo opcache.enable_cli=1 >> php.ini
   - IF %PHP%==1 echo apc.enable_cli=1 >> php.ini
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
-  - cd C:\projects\automatic
+  - cd C:\projects\mimetypes
   - php -r "readfile('https://getcomposer.org/installer');" | php
   # Matrix
   - php composer.phar global require hirak/prestissimo
@@ -68,5 +68,5 @@ install:
   - yarn install
 
 test_script:
-  - cd C:\projects\automatic
+  - cd C:\projects\mimetypes
   - sh ./build/appveyor/script.sh
