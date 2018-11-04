@@ -20,7 +20,7 @@ before_install:
   - ./build/travis/configure_php.sh
 
 install:
-  - yarn upgrade
+  - yarn install
   - composer global require hirak/prestissimo
   - $COMPOSER_UP
 
