@@ -67,7 +67,7 @@ class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
         if ($cmd === null) {
             $cmd = 'file -b --mime %s';
 
-            if (\mb_strtolower(\mb_substr(\PHP_OS, 0, 3)) !== 'win') {
+            if (\stripos(\PHP_OS, 'win') !== 0) {
                 $cmd .= ' 2>/dev/null';
             }
         }

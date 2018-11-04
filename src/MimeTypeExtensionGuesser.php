@@ -27,7 +27,7 @@ class MimeTypeExtensionGuesser implements MimeTypeGuesserContract
      */
     public static function guess(string $extension): ?string
     {
-        $extension = \mb_strtolower($extension);
+        $extension = \strtolower($extension);
 
         if (isset(MimeTypesList::MIMES[$extension])) {
             return MimeTypesList::MIMES[$extension][0];

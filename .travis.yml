@@ -24,12 +24,22 @@ install:
   - $COMPOSER_UP
 
 jobs:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
+    - php: 7.3
   include:
     - stage: Test
       php: 7.1
       env: REMOVE_XDEBUG=true
     - stage: Test
       php: 7.2
+      env: REMOVE_XDEBUG=true
+    - stage: Test
+      php: 7.3
+      env: REMOVE_XDEBUG=true
+    - stage: Test
+      php: nightly
       env: REMOVE_XDEBUG=true
 
     - stage: Coding standard
