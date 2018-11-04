@@ -16,9 +16,6 @@ environment:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - dependencies: lowest
-      PHP_VERSION: 7.2
 
 # cache is cleared when linked file is modified
 cache:
