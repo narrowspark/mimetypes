@@ -5,9 +5,18 @@ namespace Narrowspark\MimeType;
 class MimeTypesList
 {
     /**
+     * Version of the mime db package.
+     *
+     * @see https://npmjs.org/package/mime-db
+     *
+     * @var string
+     */
+    public const MIME_DB_VERSION = '1.37.0';
+
+    /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Mon, 20 Aug 2018 21:33:44 GMT
+     * Last generated: Sun, 04 Nov 2018 17:04:04 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -2567,6 +2576,18 @@ class MimeTypesList
         ],
         'gif' => [
             0 => 'image/gif',
+        ],
+        'heic' => [
+            0 => 'image/heic',
+        ],
+        'heics' => [
+            0 => 'image/heic-sequence',
+        ],
+        'heif' => [
+            0 => 'image/heif',
+        ],
+        'heifs' => [
+            0 => 'image/heif-sequence',
         ],
         'ief' => [
             0 => 'image/ief',

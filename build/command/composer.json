@@ -1,0 +1,15 @@
+{
+    "require": {
+        "php": "^7.2",
+        "mindscreen/yarnlock": "^1.0.1",
+        "symfony/process": "^4.1.0",
+        "viserio/console": "^1.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Narrowspark\\MimeType\\Build\\Command\\": ""
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
