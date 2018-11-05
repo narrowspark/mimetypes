@@ -89,9 +89,9 @@ class CommitCommand extends AbstractCommand
             return 1;
         }
 
-        $tag = \ltrim($gitGetLastTagProcess->getOutput(), 'v') + 0.1;
+        \preg_match_all('/\.?(\d+)/', \ltrim($gitGetLastTagProcess->getOutput(), 'v'), $result);
 
-        $gitCreateTagProcess = new Process(\sprintf('git tag -a %s -m \'%s\'', $tag, 'updated mime-db to ' . $mimeDbVersion));
+        $gitCreateTagProcess = new Process(\sprintf('git tag -a %s -m \'%s\'', $result[1][0] . '.' . ($result[1][1] + 1) . '.0', 'updated mime-db to ' . $mimeDbVersion));
         $gitCreateTagProcess->run();
 
         if (! $gitCreateTagProcess->isSuccessful()) {

@@ -8,7 +8,6 @@ coverage.xml
 composer.phar
 composer.lock
 yarn.lock
-/build/command/composer.lock
 
 /build/logs
 /build/command/vendor
