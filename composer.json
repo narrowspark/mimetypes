@@ -24,7 +24,7 @@
         "ext-fileinfo": "*",
         "ext-json": "*",
         "narrowspark/coding-standard": "^1.4.0",
-        "phpunit/phpunit": "^7.2.0",
+        "phpunit/phpunit": "^7.5.8",
         "mindscreen/yarnlock": "^1.0.1"
     },
     "config": {

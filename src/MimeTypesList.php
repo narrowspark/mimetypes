@@ -11,12 +11,12 @@ class MimeTypesList
      *
      * @var string
      */
-    public const MIME_DB_VERSION = '1.37.0';
+    public const MIME_DB_VERSION = '1.39.0';
 
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Mon, 05 Nov 2018 22:14:13 GMT
+     * Last generated: Fri, 05 Apr 2019 08:34:06 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -235,6 +235,12 @@ class MimeTypesList
         ],
         'mxf' => [
             0 => 'application/mxf',
+        ],
+        'nq' => [
+            0 => 'application/n-quads',
+        ],
+        'nt' => [
+            0 => 'application/n-triples',
         ],
         'bin' => [
             0 => 'application/octet-stream',
@@ -471,6 +477,12 @@ class MimeTypesList
         ],
         'shf' => [
             0 => 'application/shf+xml',
+        ],
+        'siv' => [
+            0 => 'application/sieve',
+        ],
+        'sieve' => [
+            0 => 'application/sieve',
         ],
         'smi' => [
             0 => 'application/smil+xml',
@@ -2619,6 +2631,9 @@ class MimeTypesList
         ],
         'jpf' => [
             0 => 'image/jpx',
+        ],
+        'jxr' => [
+            0 => 'image/jxr',
         ],
         'ktx' => [
             0 => 'image/ktx',
