@@ -126,7 +126,7 @@ class BuildCommand extends AbstractCommand
 
         // Map from mime-db to simple mappping "mimetype" => array(ext1, ext2, ext3)
         $mimeDbExtensions = \array_map(
-            function ($type) {
+            static function ($type) {
                 // Format for 'mime-db' is as follow:
                 //    "application/xml": {
                 //        "source": "iana",
