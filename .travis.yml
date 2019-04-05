@@ -21,11 +21,11 @@ before_install:
 
 install:
   - yarn install
+  - cat yarn.lock -p | grep version
   - composer global require hirak/prestissimo
   - $COMPOSER_UP
 
 jobs:
-  fast_finish: true
   allow_failures:
     - php: nightly
     - php: 7.3
@@ -76,6 +76,7 @@ jobs:
       env: REMOVE_XDEBUG=true
       install:
         - yarn install
+        - cat yarn.lock -p | grep version
         - composer global require hirak/prestissimo
         - |
           cd ./build/command
