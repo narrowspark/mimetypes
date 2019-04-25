@@ -1,8 +1,10 @@
 {
     "require": {
         "php": "^7.2",
+        "ext-json": "*",
         "mindscreen/yarnlock": "^1.0.1",
-        "symfony/process": "^4.1.0",
+        "symfony/process": "^4.2.0",
+        "symfony/var-exporter": "^4.2.0",
         "viserio/console": "^1.0@dev"
     },
     "autoload": {

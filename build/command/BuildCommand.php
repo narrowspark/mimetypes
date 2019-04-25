@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Narrowspark\MimeType\Build\Command;
 
 use Mindscreen\YarnLock\YarnLock;
+use Symfony\Component\VarExporter\VarExporter;
 use Viserio\Component\Console\Command\AbstractCommand;
 
 class BuildCommand extends AbstractCommand
@@ -82,7 +83,7 @@ class BuildCommand extends AbstractCommand
                     '{dummyMimeDbVersion}',
                 ],
                 [
-                    self::getPrettyPrintArray($mimeTypeList),
+                    VarExporter::export($mimeTypeList),
                     $this->option('classname'),
                     $this->option('namespace'),
                     \gmdate('D, d M Y H:i:s T', \time()),
@@ -152,57 +153,5 @@ class BuildCommand extends AbstractCommand
         }
 
         return $array;
-    }
-
-    /**
-     * Make php array pretty for save or output.
-     *
-     * @param array $config
-     * @param int   $indentLevel
-     *
-     * @return string
-     */
-    private static function getPrettyPrintArray(array $config, int $indentLevel = 1): string
-    {
-        $indent  = \str_repeat(' ', $indentLevel * 4);
-        $entries = [];
-
-        foreach ($config as $key => $value) {
-            if (! \is_int($key)) {
-                $key = \sprintf("'%s'", $key);
-            }
-
-            $entries[] = \sprintf(
-                '    %s%s%s,',
-                $indent,
-                \sprintf('%s => ', $key),
-                self::createValue($value, $indentLevel)
-            );
-        }
-
-        $outerIndent = \str_repeat(' ', ($indentLevel - 1) * 4);
-
-        return \sprintf("[\n%s\n%s    ]", \implode("\n", $entries), $outerIndent);
-    }
-
-    /**
-     * Create the right value.
-     *
-     * @param mixed $value
-     * @param int   $indentLevel
-     *
-     * @return string
-     */
-    private static function createValue($value, int $indentLevel): string
-    {
-        if (\is_array($value)) {
-            return self::getPrettyPrintArray($value, $indentLevel + 1);
-        }
-
-        if (\is_numeric($value)) {
-            return (string) $value;
-        }
-
-        return \var_export($value, true);
     }
 }
