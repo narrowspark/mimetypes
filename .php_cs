@@ -8,6 +8,7 @@ $config->getFinder()
     ->exclude('build/stub')
     ->exclude('vendor')
     ->notPath('tests/Fixture/ActualMimeTypeDbList.php')
+    ->notPath('src/MimeTypesList.php')
     ->name('*.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);

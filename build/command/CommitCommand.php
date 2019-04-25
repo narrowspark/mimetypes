@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace Narrowspark\MimeType\Build\Command;
 
 use Mindscreen\YarnLock\YarnLock;
-use Narrowspark\MimeType\MimeTypesList;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Viserio\Component\Console\Command\AbstractCommand;
@@ -46,7 +45,7 @@ class CommitCommand extends AbstractCommand
     {
         $mimeDbVersion = $this->yarnLock->getPackage('mime-db')->getVersion();
         // Get the last master version to check if the package should be upgraded.
-        $masterPackageJson = \file_get_contents('https://raw.githubusercontent.com/narrowspark/mimetypes/master/package.json');
+        $masterPackageJson  = \file_get_contents('https://raw.githubusercontent.com/narrowspark/mimetypes/master/package.json');
         $masterPackageArray = \json_decode($masterPackageJson, true);
 
         if ($mimeDbVersion === $masterPackageArray['dependencies']['mime-db']) {
