@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace Narrowspark\MimeType\Build\Command;
 
 use Mindscreen\YarnLock\YarnLock;
-use Narrowspark\MimeType\MimeTypesList;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Viserio\Component\Console\Command\AbstractCommand;
@@ -45,8 +44,11 @@ class CommitCommand extends AbstractCommand
     public function handle(): int
     {
         $mimeDbVersion = $this->yarnLock->getPackage('mime-db')->getVersion();
+        // Get the last master version to check if the package should be upgraded.
+        $masterPackageJson  = \file_get_contents('https://raw.githubusercontent.com/narrowspark/mimetypes/master/package.json');
+        $masterPackageArray = \json_decode($masterPackageJson, true);
 
-        if ($mimeDbVersion === MimeTypesList::MIME_DB_VERSION) {
+        if ($mimeDbVersion === $masterPackageArray['dependencies']['mime-db']) {
             $this->info('Nothing to update.');
 
             return 0;
@@ -54,7 +56,7 @@ class CommitCommand extends AbstractCommand
 
         $this->info('Making a commit to narrowspark/mimetypes.');
 
-        $filesToCommit = ' -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php  -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock';
+        $filesToCommit = ' -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php  -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'package.json';
 
         $gitCommitProcess = new Process(
             'git commit -m "Automatically updated on ' . (new \DateTimeImmutable('now'))->format(\DateTimeImmutable::RFC7231) . '"' . $filesToCommit
@@ -100,7 +102,7 @@ class CommitCommand extends AbstractCommand
             return 1;
         }
 
-        $this->info($gitCreateTagProcess->getOutput());
+        $this->info($tag = $gitCreateTagProcess->getOutput());
 
         $gitPushTagProcess = new Process(\sprintf('git push origin %s --quiet', $tag));
         $gitPushTagProcess->run();
