@@ -16,7 +16,7 @@ class MimeTypesList
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Fri, 26 Apr 2019 17:30:48 GMT
+     * Last generated: Sat, 27 Apr 2019 17:31:15 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
