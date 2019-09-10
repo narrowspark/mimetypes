@@ -37,7 +37,7 @@ final class MimeTypeFileInfoGuesserTest extends TestCase
     public function testGuessExtensionWithMimeTypeFileInfoGuesser(): void
     {
         self::assertSame(
-            'inode/x-empty',
+            \PHP_VERSION_ID < 70400 ? 'inode/x-empty' : 'application/x-empty',
             MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
         );
 
