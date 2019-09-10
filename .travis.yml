@@ -28,12 +28,8 @@ install:
 jobs:
   allow_failures:
     - php: nightly
-    - php: 7.3
+    - php: 7.4snapshot
   include:
-    - stage: Test
-      if: NOT type = cron
-      php: 7.1
-      env: REMOVE_XDEBUG=true
     - stage: Test
       if: NOT type = cron
       php: 7.2
@@ -41,6 +37,10 @@ jobs:
     - stage: Test
       if: NOT type = cron
       php: 7.3
+      env: REMOVE_XDEBUG=true
+    - stage: Test
+      if: NOT type = cron
+      php: 7.4snapshot
       env: REMOVE_XDEBUG=true
     - stage: Test
       if: NOT type = cron

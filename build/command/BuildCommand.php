@@ -1,16 +1,25 @@
 <?php
+
 declare(strict_types=1);
+
+/**
+ * This file is part of Narrowspark.
+ *
+ * (c) Daniel Bannert <d.bannert@anolilab.de>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Narrowspark\MimeType\Build\Command;
 
 use Mindscreen\YarnLock\YarnLock;
 use Symfony\Component\VarExporter\VarExporter;
 use Viserio\Component\Console\Command\AbstractCommand;
 
-class BuildCommand extends AbstractCommand
+final class BuildCommand extends AbstractCommand
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected static $defaultName = 'build';
 
     /**
@@ -94,7 +103,7 @@ class BuildCommand extends AbstractCommand
         );
 
         $packageJsonPath = $this->rootPath . \DIRECTORY_SEPARATOR . 'package.json';
-        $packageJson     = \json_decode(\file_get_contents($packageJsonPath), true);
+        $packageJson = \json_decode(\file_get_contents($packageJsonPath), true);
 
         $packageJson['dependencies']['mime-db'] = '^' . $version;
 
@@ -108,12 +117,12 @@ class BuildCommand extends AbstractCommand
      */
     protected function configure(): void
     {
-        $this->stubFilePath   = \dirname(__DIR__, 1) . \DIRECTORY_SEPARATOR . 'stub' . \DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
+        $this->stubFilePath = \dirname(__DIR__, 1) . \DIRECTORY_SEPARATOR . 'stub' . \DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
 
-        $this->rootPath       = \dirname(__DIR__, 2);
+        $this->rootPath = \dirname(__DIR__, 2);
         $this->outputFilePath = $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php';
-        $this->mimeDbPath     = $this->rootPath . \DIRECTORY_SEPARATOR . 'node_modules' . \DIRECTORY_SEPARATOR . 'mime-db' . \DIRECTORY_SEPARATOR . 'db.json';
-        $this->yarnLock       = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
+        $this->mimeDbPath = $this->rootPath . \DIRECTORY_SEPARATOR . 'node_modules' . \DIRECTORY_SEPARATOR . 'mime-db' . \DIRECTORY_SEPARATOR . 'db.json';
+        $this->yarnLock = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
     }
 
     /**
@@ -140,7 +149,7 @@ class BuildCommand extends AbstractCommand
         );
 
         $combinedArray = \ array_combine(\array_keys($mimeDb), $mimeDbExtensions);
-        $array         = [];
+        $array = [];
 
         foreach ($combinedArray as $type => $extensions) {
             foreach ($extensions as $extension) {

@@ -1,12 +1,23 @@
 <?php
+
 declare(strict_types=1);
+
+/**
+ * This file is part of Narrowspark.
+ *
+ * (c) Daniel Bannert <d.bannert@anolilab.de>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Narrowspark\MimeType;
 
 use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
 use Narrowspark\MimeType\Exception\AccessDeniedException;
 use Narrowspark\MimeType\Exception\FileNotFoundException;
 
-class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
+final class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
 {
     /**
      * The magic file path.
@@ -70,10 +81,18 @@ class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
             $finfo = \finfo_open(\FILEINFO_MIME_TYPE);
         }
 
+        if ($finfo === false) {
+            return null;
+        }
+
         $type = \finfo_file($finfo, $filename);
 
         \finfo_close($finfo);
 
-        return $type ?? null;
+        if ($type === false) {
+            return null;
+        }
+
+        return $type;
     }
 }
