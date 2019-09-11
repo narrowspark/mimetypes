@@ -10,7 +10,6 @@ env:
 cache:
   yarn: true
   directories:
-    - $HOME/node_modules
     - $HOME/.composer/cache
     - $HOME/.php-cs-fixer
 
