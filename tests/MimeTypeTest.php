@@ -1,5 +1,16 @@
 <?php
+
 declare(strict_types=1);
+
+/**
+ * This file is part of Narrowspark.
+ *
+ * (c) Daniel Bannert <d.bannert@anolilab.de>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Narrowspark\MimeType\Tests;
 
 use Narrowspark\MimeType\Exception\AccessDeniedException;
@@ -13,6 +24,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
+ * @small
  */
 final class MimeTypeTest extends TestCase
 {
@@ -37,12 +50,12 @@ final class MimeTypeTest extends TestCase
 
     public function testGuess(): void
     {
-        $this->assertSame(
+        self::assertSame(
             'application/vnd.lotus-1-2-3',
             MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/lotus.123'))
         );
 
-        $this->assertSame(
+        self::assertSame(
             'application/xml',
             MimeType::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/meta.xml'))
         );
@@ -52,20 +65,20 @@ final class MimeTypeTest extends TestCase
     {
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/test');
 
-        $this->assertSame('image/gif', MimeTypeFileInfoGuesser::guess($path));
+        self::assertSame('image/gif', MimeTypeFileInfoGuesser::guess($path));
 
         if (! MimeTypeFileBinaryGuesser::isSupported()) {
-            $this->assertSame('image/gif', MimeTypeFileBinaryGuesser::guess($path));
+            self::assertSame('image/gif', MimeTypeFileBinaryGuesser::guess($path));
         }
     }
 
     public function testGuessExtensionWithMimeTypeFileBinaryGuesser(): void
     {
         if (! MimeTypeFileBinaryGuesser::isSupported()) {
-            $this->markTestSkipped('Can only run on a *nix system');
+            self::markTestSkipped('Can only run on a *nix system');
         }
 
-        $this->assertSame(
+        self::assertSame(
             'application/octet-stream',
             MimeTypeFileBinaryGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/latlon.bin'))
         );
@@ -78,7 +91,7 @@ final class MimeTypeTest extends TestCase
         try {
             MimeType::guess($path);
         } catch (FileNotFoundException $exception) {
-            $this->assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
     }
 
@@ -89,13 +102,13 @@ final class MimeTypeTest extends TestCase
         try {
             MimeType::guess($path);
         } catch (FileNotFoundException $exception) {
-            $this->assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
 
         try {
             MimeTypeFileInfoGuesser::guess($path);
         } catch (FileNotFoundException $exception) {
-            $this->assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
     }
 
@@ -103,22 +116,22 @@ final class MimeTypeTest extends TestCase
     {
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/.unknownextension');
 
-        $this->assertSame('application/octet-stream', MimeType::guess($path));
-        $this->assertSame('application/octet-stream', MimeTypeFileInfoGuesser::guess($path));
+        self::assertSame('application/octet-stream', MimeType::guess($path));
+        self::assertSame('application/octet-stream', MimeTypeFileInfoGuesser::guess($path));
 
         if (! MimeTypeFileBinaryGuesser::isSupported()) {
-            $this->assertSame('application/octet-stream', MimeTypeFileBinaryGuesser::guess($path));
+            self::assertSame('application/octet-stream', MimeTypeFileBinaryGuesser::guess($path));
         }
     }
 
     public function testGuessWithNonReadablePath(): void
     {
         if (\DIRECTORY_SEPARATOR === '\\') {
-            $this->markTestSkipped('Can not verify chmod operations on Windows');
+            self::markTestSkipped('Can not verify chmod operations on Windows');
         }
 
         if (! \getenv('USER') || 'root' === \getenv('USER')) {
-            $this->markTestSkipped('This test will fail if run under superuser');
+            self::markTestSkipped('This test will fail if run under superuser');
         }
 
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete');
@@ -130,7 +143,7 @@ final class MimeTypeTest extends TestCase
 
             MimeType::guess($path);
         } else {
-            $this->markTestSkipped('Can not verify chmod operations, change of file permissions failed');
+            self::markTestSkipped('Can not verify chmod operations, change of file permissions failed');
         }
     }
 
@@ -142,7 +155,7 @@ final class MimeTypeTest extends TestCase
      */
     public function testGuessMimeTypeFromExtension(string $extension, ?string $mimeType): void
     {
-        $this->assertSame(
+        self::assertSame(
             $mimeType,
             MimeTypeExtensionGuesser::guess($extension)
         );
