@@ -11,12 +11,12 @@ class MimeTypesList
      *
      * @var string
      */
-    public const MIME_DB_VERSION = '1.40.0';
+    public const MIME_DB_VERSION = '1.41.0';
 
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Sat, 27 Apr 2019 17:31:15 GMT
+     * Last generated: Tue, 10 Sep 2019 21:39:01 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -522,6 +522,9 @@ class MimeTypesList
     ],
     'tsd' => [
         'application/timestamped-data',
+    ],
+    'toml' => [
+        'application/toml',
     ],
     'plb' => [
         'application/vnd.3gpp.pic-bw-large',
@@ -2602,6 +2605,12 @@ class MimeTypesList
     'heifs' => [
         'image/heif-sequence',
     ],
+    'hej2' => [
+        'image/hej2k',
+    ],
+    'hsj2' => [
+        'image/hsj2',
+    ],
     'ief' => [
         'image/ief',
     ],
@@ -2623,6 +2632,12 @@ class MimeTypesList
     'jpe' => [
         'image/jpeg',
     ],
+    'jph' => [
+        'image/jph',
+    ],
+    'jhc' => [
+        'image/jphc',
+    ],
     'jpm' => [
         'image/jpm',
         'video/jpm',
@@ -2635,6 +2650,18 @@ class MimeTypesList
     ],
     'jxr' => [
         'image/jxr',
+    ],
+    'jxra' => [
+        'image/jxra',
+    ],
+    'jxrs' => [
+        'image/jxrs',
+    ],
+    'jxsi' => [
+        'image/jxsi',
+    ],
+    'jxss' => [
+        'image/jxss',
     ],
     'ktx' => [
         'image/ktx',
