@@ -6,8 +6,8 @@ use ChangelogGenerator\ChangelogConfig;
 return [
     (new ChangelogConfig(
         'narrowspark',
-        'automatic',
-        'v1.0.3',
+        'mimetypes',
+        'v1.4.0',
         ['Added', 'Changed', 'Deprecated', 'Removed', 'Fixed', 'Security']
-    ))
+    )),
 ];
