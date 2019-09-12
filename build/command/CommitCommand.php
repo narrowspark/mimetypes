@@ -13,10 +13,8 @@ declare(strict_types=1);
 
 namespace Narrowspark\MimeType\Build\Command;
 
-use Mindscreen\YarnLock\YarnLock;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use Viserio\Component\Console\Command\AbstractCommand;
 
 final class CommitCommand extends AbstractCommand
 {
@@ -34,32 +32,11 @@ final class CommitCommand extends AbstractCommand
     protected $description = 'Commit changes to narrowspark/mimetypes';
 
     /**
-     * Path to dir.
-     *
-     * @var string
-     */
-    protected $rootPath;
-
-    /**
-     * A YarnLock instance.
-     *
-     * @var \Mindscreen\YarnLock\YarnLock
-     */
-    private $yarnLock;
-
-    /**
      * {@inheritdoc}
      */
     public function handle(): int
     {
-        $mimeDbVersion = $this->yarnLock->getPackage('mime-db')->getVersion();
-        // Get the last master version to check if the package should be upgraded.
-        $masterPackageJson = \file_get_contents('https://raw.githubusercontent.com/narrowspark/mimetypes/master/package.json');
-        $masterPackageArray = \json_decode($masterPackageJson, true);
-
-        if ($mimeDbVersion === $masterPackageArray['dependencies']['mime-db']) {
-            $this->info('Nothing to update.');
-
+        if ($this->testMimeDbVersion() === 1) {
             return 0;
         }
 
@@ -141,14 +118,5 @@ final class CommitCommand extends AbstractCommand
         $this->info($gitPushTagProcess->getOutput());
 
         return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->rootPath = \dirname(__DIR__, 2);
-        $this->yarnLock = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
     }
 }

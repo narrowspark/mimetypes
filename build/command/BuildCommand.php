@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Narrowspark\MimeType\Build\Command;
 
-use Mindscreen\YarnLock\YarnLock;
 use Symfony\Component\VarExporter\VarExporter;
-use Viserio\Component\Console\Command\AbstractCommand;
 
 final class BuildCommand extends AbstractCommand
 {
@@ -34,13 +32,6 @@ final class BuildCommand extends AbstractCommand
      * {@inheritdoc}
      */
     protected $description = 'Builds the MimeTypesList class';
-
-    /**
-     * Path to the root dir path.
-     *
-     * @var string
-     */
-    private $rootPath;
 
     /**
      * Path to the stub file.
@@ -64,17 +55,14 @@ final class BuildCommand extends AbstractCommand
     private $mimeDbPath;
 
     /**
-     * A YarnLock instance.
-     *
-     * @var \Mindscreen\YarnLock\YarnLock
-     */
-    private $yarnLock;
-
-    /**
      * {@inheritdoc}
      */
     public function handle(): int
     {
+        if ($this->testMimeDbVersion() === 1) {
+            return 0;
+        }
+
         $mimeTypeList = self::createMimeArray(\file_get_contents($this->mimeDbPath));
 
         $this->info('Generating the MimeTypesList class.');
@@ -117,12 +105,12 @@ final class BuildCommand extends AbstractCommand
      */
     protected function configure(): void
     {
+        parent::configure();
+
         $this->stubFilePath = \dirname(__DIR__, 1) . \DIRECTORY_SEPARATOR . 'stub' . \DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
 
-        $this->rootPath = \dirname(__DIR__, 2);
         $this->outputFilePath = $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php';
         $this->mimeDbPath = $this->rootPath . \DIRECTORY_SEPARATOR . 'node_modules' . \DIRECTORY_SEPARATOR . 'mime-db' . \DIRECTORY_SEPARATOR . 'db.json';
-        $this->yarnLock = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
     }
 
     /**
