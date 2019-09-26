@@ -11,12 +11,12 @@ class MimeTypesList
      *
      * @var string
      */
-    public const MIME_DB_VERSION = '1.41.0';
+    public const MIME_DB_VERSION = '1.42.0';
 
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Thu, 12 Sep 2019 09:50:06 GMT
+     * Last generated: Thu, 26 Sep 2019 10:18:25 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -2657,6 +2657,12 @@ class MimeTypesList
     'jxrs' => [
         'image/jxrs',
     ],
+    'jxs' => [
+        'image/jxs',
+    ],
+    'jxsc' => [
+        'image/jxsc',
+    ],
     'jxsi' => [
         'image/jxsi',
     ],
@@ -2748,6 +2754,9 @@ class MimeTypesList
     'ico' => [
         'image/vnd.microsoft.icon',
         'image/x-icon',
+    ],
+    'dds' => [
+        'image/vnd.ms-dds',
     ],
     'mdi' => [
         'image/vnd.ms-modi',
