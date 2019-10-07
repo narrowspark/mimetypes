@@ -48,7 +48,7 @@
     "prefer-stable": true,
     "scripts": {
         "coverage": "phpunit --coverage-html=\"build/logs\"",
-        "cs": "php-cs-fixer fix",
+        "cs": "php-cs-fixer fix -v",
         "phpstan": "phpstan analyse -c phpstan.neon src --memory-limit=-1",
         "test": "phpunit",
         "changelog":  "changelog-generator generate --config=\".changelog\" --file --prepend"
