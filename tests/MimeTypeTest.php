@@ -148,7 +148,7 @@ final class MimeTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider extensionDataProvider
+     * @dataProvider provideGuessMimeTypeFromExtensionCases
      *
      * @param string      $extension
      * @param null|string $mimeType
@@ -164,7 +164,7 @@ final class MimeTypeTest extends TestCase
     /**
      * @return array
      */
-    public function extensionDataProvider(): array
+    public function provideGuessMimeTypeFromExtensionCases(): iterable
     {
         return [
             ['jpg', 'image/jpeg'],
