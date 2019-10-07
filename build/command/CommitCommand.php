@@ -87,7 +87,7 @@ final class CommitCommand extends AbstractCommand
 
         \preg_match_all('/\.?(\d+)/', \ltrim($gitGetLastTagProcess->getOutput(), 'v'), $result);
 
-        $gitCreateTagCommand = \sprintf('git tag -a %s -m \'%s\'', $result[1][0] . '.' . ($result[1][1] + 1) . '.0', 'updated mime-db to ' . $mimeDbVersion);
+        $gitCreateTagCommand = \sprintf('git tag -a %s -m \'%s\'', $result[1][0] . '.' . ($result[1][1] + 1) . '.0', 'updated mime-db to ' . $this->yarnLock->getPackage('mime-db')->getVersion());
 
         $this->info($gitCreateTagCommand);
 
