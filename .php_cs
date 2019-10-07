@@ -12,6 +12,17 @@ EOF;
 
 $config = new Config($header, [
     'final_class' => false,
+    'heredoc_indentation' => false,
+    'PhpCsFixerCustomFixers/no_commented_out_code' => false,
+    'PhpCsFixerCustomFixers/phpdoc_no_superfluous_param' => false,
+    'PhpCsFixerCustomFixers/data_provider_return_type' => true,
+    'PhpCsFixerCustomFixers/data_provider_name' => true,
+    'PhpCsFixerCustomFixers/comment_surrounded_by_spaces' => true,
+    'PhpCsFixerCustomFixers/no_duplicated_imports' => true,
+    'PhpCsFixerCustomFixers/no_useless_sprintf' => true,
+    'PhpCsFixerCustomFixers/php_unit_no_useless_return' => true,
+    'PhpCsFixerCustomFixers/single_line_throw' => true,
+    'PedroTroller/line_break_between_method_arguments' => false,
 ]);
 $config->getFinder()
     ->files()
