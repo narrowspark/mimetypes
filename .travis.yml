@@ -39,7 +39,7 @@ jobs:
       env: REMOVE_XDEBUG=true
     - stage: Test
       if: NOT type = cron
-      php: 7.4snapshot
+      php: 7.4
       env: REMOVE_XDEBUG=true
     - stage: Test
       if: NOT type = cron
@@ -71,12 +71,12 @@ jobs:
 
     - stage: Build
       if: type = cron
-      php: 7.3
+      php: 7.4
       env: REMOVE_XDEBUG=true
       install:
         - yarn install
         - cat yarn.lock | grep version
-        - composer global require hirak/prestissimo
+        - composer global require --no-progress --no-scripts --no-plugins narrowspark/automatic-composer-prefetcher:dev-master
         - |
           cd ./build/command
           $COMPOSER_UP
@@ -98,4 +98,4 @@ jobs:
 notifications:
   email:
     on_success: never
-    on_failure: change
+    on_failure: always

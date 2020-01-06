@@ -15,6 +15,11 @@ namespace Narrowspark\MimeType\Build\Command;
 
 use Mindscreen\YarnLock\YarnLock;
 use Viserio\Component\Console\Command\AbstractCommand as BaseAbstractCommand;
+use const DIRECTORY_SEPARATOR;
+use function dirname;
+use function file_get_contents;
+use function json_decode;
+use function str_replace;
 
 abstract class AbstractCommand extends BaseAbstractCommand
 {
@@ -43,10 +48,10 @@ abstract class AbstractCommand extends BaseAbstractCommand
     {
         $mimeDbVersion = $this->yarnLock->getPackage('mime-db')->getVersion();
         // Get the last master version to check if the package should be upgraded.
-        $masterPackageJson = \file_get_contents(static::PACKAGE_JSON_URL);
-        $masterPackageArray = \json_decode($masterPackageJson, true);
+        $masterPackageJson = file_get_contents(static::PACKAGE_JSON_URL);
+        $masterPackageArray = json_decode($masterPackageJson, true);
 
-        if ($mimeDbVersion === \str_replace('^', '', $masterPackageArray['dependencies']['mime-db'])) {
+        if ($mimeDbVersion === str_replace('^', '', $masterPackageArray['dependencies']['mime-db'])) {
             $this->info('Nothing to update.');
 
             return 1;
@@ -60,7 +65,7 @@ abstract class AbstractCommand extends BaseAbstractCommand
      */
     protected function configure(): void
     {
-        $this->rootPath = \dirname(__DIR__, 2);
-        $this->yarnLock = YarnLock::fromString((string) \file_get_contents($this->rootPath . \DIRECTORY_SEPARATOR . 'yarn.lock'));
+        $this->rootPath = dirname(__DIR__, 2);
+        $this->yarnLock = YarnLock::fromString((string) file_get_contents($this->rootPath . DIRECTORY_SEPARATOR . 'yarn.lock'));
     }
 }

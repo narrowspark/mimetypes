@@ -1,5 +1,5 @@
 {
     "dependencies": {
-        "mime-db": "^1.42.0"
+        "mime-db": "^1.43.0"
     }
 }

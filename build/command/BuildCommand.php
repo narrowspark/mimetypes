@@ -14,6 +14,22 @@ declare(strict_types=1);
 namespace Narrowspark\MimeType\Build\Command;
 
 use Symfony\Component\VarExporter\VarExporter;
+use const DIRECTORY_SEPARATOR;
+use const JSON_PRETTY_PRINT;
+use function array_combine;
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function dirname;
+use function file_get_contents;
+use function file_put_contents;
+use function gmdate;
+use function json_decode;
+use function json_encode;
+use function str_replace;
+use function time;
 
 final class BuildCommand extends AbstractCommand
 {
@@ -63,15 +79,15 @@ final class BuildCommand extends AbstractCommand
             return 0;
         }
 
-        $mimeTypeList = self::createMimeArray(\file_get_contents($this->mimeDbPath));
+        $mimeTypeList = self::createMimeArray(file_get_contents($this->mimeDbPath));
 
         $this->info('Generating the MimeTypesList class.');
 
         $version = $this->yarnLock->getPackage('mime-db')->getVersion();
 
-        $mimeTypeListOutput = \file_put_contents(
+        $mimeTypeListOutput = file_put_contents(
             $this->outputFilePath,
-            \str_replace(
+            str_replace(
                 [
                     '{dummyList}',
                     '{dummyClass}',
@@ -83,19 +99,19 @@ final class BuildCommand extends AbstractCommand
                     VarExporter::export($mimeTypeList),
                     $this->option('classname'),
                     $this->option('namespace'),
-                    \gmdate('D, d M Y H:i:s T', \time()),
+                    gmdate('D, d M Y H:i:s T', time()),
                     $version,
                 ],
-                \file_get_contents($this->stubFilePath)
+                file_get_contents($this->stubFilePath)
             )
         );
 
-        $packageJsonPath = $this->rootPath . \DIRECTORY_SEPARATOR . 'package.json';
-        $packageJson = \json_decode(\file_get_contents($packageJsonPath), true);
+        $packageJsonPath = $this->rootPath . DIRECTORY_SEPARATOR . 'package.json';
+        $packageJson = json_decode(file_get_contents($packageJsonPath), true);
 
         $packageJson['dependencies']['mime-db'] = '^' . $version;
 
-        $packageJsonPathOutput = \file_put_contents($packageJsonPath, \json_encode($packageJson, \JSON_PRETTY_PRINT));
+        $packageJsonPathOutput = file_put_contents($packageJsonPath, json_encode($packageJson, JSON_PRETTY_PRINT));
 
         return (int) (($mimeTypeListOutput === false) && ($packageJsonPathOutput === false));
     }
@@ -107,10 +123,10 @@ final class BuildCommand extends AbstractCommand
     {
         parent::configure();
 
-        $this->stubFilePath = \dirname(__DIR__, 1) . \DIRECTORY_SEPARATOR . 'stub' . \DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
+        $this->stubFilePath = dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . 'stub' . DIRECTORY_SEPARATOR . 'MimetypeClass.stub';
 
-        $this->outputFilePath = $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php';
-        $this->mimeDbPath = $this->rootPath . \DIRECTORY_SEPARATOR . 'node_modules' . \DIRECTORY_SEPARATOR . 'mime-db' . \DIRECTORY_SEPARATOR . 'db.json';
+        $this->outputFilePath = $this->rootPath . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MimeTypesList.php';
+        $this->mimeDbPath = $this->rootPath . DIRECTORY_SEPARATOR . 'node_modules' . DIRECTORY_SEPARATOR . 'mime-db' . DIRECTORY_SEPARATOR . 'db.json';
     }
 
     /**
@@ -120,10 +136,10 @@ final class BuildCommand extends AbstractCommand
      */
     private static function createMimeArray(string $db): array
     {
-        $mimeDb = \json_decode($db, true);
+        $mimeDb = json_decode($db, true);
 
         // Map from mime-db to simple mappping "mimetype" => array(ext1, ext2, ext3)
-        $mimeDbExtensions = \array_map(
+        $mimeDbExtensions = array_map(
             static function ($type) {
                 // Format for 'mime-db' is as follow:
                 //    "application/xml": {
@@ -133,18 +149,18 @@ final class BuildCommand extends AbstractCommand
                 //    },
                 return $type['extensions'] ?? [];
             },
-            \array_values($mimeDb)
+            array_values($mimeDb)
         );
 
-        $combinedArray = \ array_combine(\array_keys($mimeDb), $mimeDbExtensions);
+        $combinedArray =  array_combine(array_keys($mimeDb), $mimeDbExtensions);
         $array = [];
 
         foreach ($combinedArray as $type => $extensions) {
             foreach ($extensions as $extension) {
                 if (! isset($array[$extension])) {
-                    $array[$extension] = \array_unique([$type]);
+                    $array[$extension] = array_unique([$type]);
                 } else {
-                    $array[$extension] = \array_unique(\array_merge($array[$extension], [$type]));
+                    $array[$extension] = array_unique(array_merge($array[$extension], [$type]));
                 }
             }
         }

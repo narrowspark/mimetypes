@@ -15,6 +15,8 @@ namespace Narrowspark\MimeType\Tests;
 
 use Narrowspark\MimeType\MimeTypeFileInfoGuesser;
 use PHPUnit\Framework\TestCase;
+use const PHP_VERSION_ID;
+use function str_replace;
 
 /**
  * @internal
@@ -37,7 +39,7 @@ final class MimeTypeFileInfoGuesserTest extends TestCase
     public function testGuessExtensionWithMimeTypeFileInfoGuesser(): void
     {
         self::assertSame(
-            \PHP_VERSION_ID < 70400 ? 'inode/x-empty' : 'application/x-empty',
+            PHP_VERSION_ID < 70400 ? 'inode/x-empty' : 'application/x-empty',
             MimeTypeFileInfoGuesser::guess(self::normalizeDirectorySeparator(__DIR__ . '/Fixture/other-file.example'))
         );
 
@@ -56,6 +58,6 @@ final class MimeTypeFileInfoGuesserTest extends TestCase
      */
     private static function normalizeDirectorySeparator($paths)
     {
-        return \str_replace('\\', '/', $paths);
+        return str_replace('\\', '/', $paths);
     }
 }

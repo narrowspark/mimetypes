@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Narrowspark\MimeType;
 
 use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
+use function strtolower;
 
 class MimeTypeExtensionGuesser implements MimeTypeGuesserContract
 {
@@ -38,7 +39,7 @@ class MimeTypeExtensionGuesser implements MimeTypeGuesserContract
      */
     public static function guess(string $extension): ?string
     {
-        $extension = \strtolower($extension);
+        $extension = strtolower($extension);
 
         if (isset(MimeTypesList::MIMES[$extension])) {
             return MimeTypesList::MIMES[$extension][0];
