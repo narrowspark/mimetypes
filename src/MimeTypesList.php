@@ -11,12 +11,12 @@ class MimeTypesList
      *
      * @var string
      */
-    public const MIME_DB_VERSION = '1.42.0';
+    public const MIME_DB_VERSION = '1.43.0';
 
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Thu, 26 Sep 2019 10:18:25 GMT
+     * Last generated: Mon, 06 Jan 2020 13:24:29 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -37,15 +37,33 @@ class MimeTypesList
     'atomcat' => [
         'application/atomcat+xml',
     ],
+    'atomdeleted' => [
+        'application/atomdeleted+xml',
+    ],
     'atomsvc' => [
         'application/atomsvc+xml',
+    ],
+    'dwd' => [
+        'application/atsc-dwd+xml',
+    ],
+    'held' => [
+        'application/atsc-held+xml',
+    ],
+    'rsat' => [
+        'application/atsc-rsat+xml',
     ],
     'bdoc' => [
         'application/bdoc',
         'application/x-bdoc',
     ],
+    'xcs' => [
+        'application/calendar+xml',
+    ],
     'ccxml' => [
         'application/ccxml+xml',
+    ],
+    'cdfx' => [
+        'application/cdfx+xml',
     ],
     'cdmia' => [
         'application/cdmi-capability',
@@ -89,11 +107,17 @@ class MimeTypesList
     'emma' => [
         'application/emma+xml',
     ],
+    'emotionml' => [
+        'application/emotionml+xml',
+    ],
     'epub' => [
         'application/epub+zip',
     ],
     'exi' => [
         'application/exi',
+    ],
+    'fdt' => [
+        'application/fdt+xml',
     ],
     'pfr' => [
         'application/font-tdpfr',
@@ -127,6 +151,9 @@ class MimeTypesList
     ],
     'ipfix' => [
         'application/ipfix',
+    ],
+    'its' => [
+        'application/its+xml',
     ],
     'jar' => [
         'application/java-archive',
@@ -163,6 +190,9 @@ class MimeTypesList
     ],
     'jsonld' => [
         'application/ld+json',
+    ],
+    'lgr' => [
+        'application/lgr+xml',
     ],
     'lostxml' => [
         'application/lost+xml',
@@ -212,6 +242,12 @@ class MimeTypesList
     'mets' => [
         'application/mets+xml',
     ],
+    'maei' => [
+        'application/mmt-aei+xml',
+    ],
+    'musd' => [
+        'application/mmt-usd+xml',
+    ],
     'mods' => [
         'application/mods+xml',
     ],
@@ -226,6 +262,11 @@ class MimeTypesList
     ],
     'm4p' => [
         'application/mp4',
+    ],
+    'xdf' => [
+        'application/mrb-consumer+xml',
+        'application/mrb-publish+xml',
+        'application/xcap-diff+xml',
     ],
     'doc' => [
         'application/msword',
@@ -342,8 +383,12 @@ class MimeTypesList
     'oxps' => [
         'application/oxps',
     ],
+    'relo' => [
+        'application/p2p-overlay+xml',
+    ],
     'xer' => [
         'application/patch-ops-error+xml',
+        'application/xcap-error+xml',
     ],
     'pdf' => [
         'application/pdf',
@@ -377,6 +422,7 @@ class MimeTypesList
     ],
     'ac' => [
         'application/pkix-attr-cert',
+        'application/vnd.nokia.n-gage.ac+xml',
     ],
     'cer' => [
         'application/pkix-cert',
@@ -401,6 +447,9 @@ class MimeTypesList
     ],
     'ps' => [
         'application/postscript',
+    ],
+    'provx' => [
+        'application/provenance+xml',
     ],
     'cww' => [
         'application/prs.cww',
@@ -431,6 +480,15 @@ class MimeTypesList
     ],
     'rs' => [
         'application/rls-services+xml',
+    ],
+    'rapd' => [
+        'application/route-apd+xml',
+    ],
+    'sls' => [
+        'application/route-s-tsid+xml',
+    ],
+    'rusd' => [
+        'application/route-usd+xml',
     ],
     'gbr' => [
         'application/rpki-ghostbusters',
@@ -468,6 +526,12 @@ class MimeTypesList
     ],
     'sdp' => [
         'application/sdp',
+    ],
+    'senmlx' => [
+        'application/senml+xml',
+    ],
+    'sensmlx' => [
+        'application/sensml+xml',
     ],
     'setpay' => [
         'application/set-payment-initiation',
@@ -511,6 +575,9 @@ class MimeTypesList
     'ssml' => [
         'application/ssml+xml',
     ],
+    'swidtag' => [
+        'application/swid+xml',
+    ],
     'tei' => [
         'application/tei+xml',
     ],
@@ -525,6 +592,15 @@ class MimeTypesList
     ],
     'toml' => [
         'application/toml',
+    ],
+    'ttml' => [
+        'application/ttml+xml',
+    ],
+    'rsheet' => [
+        'application/urc-ressheet+xml',
+    ],
+    '1km' => [
+        'application/vnd.1000minds.decision-model+xml',
     ],
     'plb' => [
         'application/vnd.3gpp.pic-bw-large',
@@ -630,6 +706,9 @@ class MimeTypesList
     ],
     'aep' => [
         'application/vnd.audiograph',
+    ],
+    'bmml' => [
+        'application/vnd.balsamiq.bmml+xml',
     ],
     'mpm' => [
         'application/vnd.blueice.multipass',
@@ -1431,8 +1510,14 @@ class MimeTypesList
     'dd2' => [
         'application/vnd.oma.dd2+xml',
     ],
+    'obgx' => [
+        'application/vnd.openblox.game+xml',
+    ],
     'oxt' => [
         'application/vnd.openofficeorg.extension',
+    ],
+    'osm' => [
+        'application/vnd.openstreetmap.data+xml',
     ],
     'pptx' => [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation',
@@ -1591,6 +1676,9 @@ class MimeTypesList
     'teacher' => [
         'application/vnd.smart.teacher',
     ],
+    'fo' => [
+        'application/vnd.software602.filler.form+xml',
+    ],
     'sdkm' => [
         'application/vnd.solent.sdkm+xml',
     ],
@@ -1686,6 +1774,9 @@ class MimeTypesList
     ],
     'xdm' => [
         'application/vnd.syncml.dm+xml',
+    ],
+    'ddf' => [
+        'application/vnd.syncml.dmddf+xml',
     ],
     'tao' => [
         'application/vnd.tao.intent-module-archive',
@@ -2041,6 +2132,9 @@ class MimeTypesList
     'jnlp' => [
         'application/x-java-jnlp-file',
     ],
+    'kdbx' => [
+        'application/x-keepass2',
+    ],
     'latex' => [
         'application/x-latex',
     ],
@@ -2287,6 +2381,7 @@ class MimeTypesList
     ],
     'xlf' => [
         'application/x-xliff+xml',
+        'application/xliff+xml',
     ],
     'xpi' => [
         'application/x-xpinstall',
@@ -2321,8 +2416,17 @@ class MimeTypesList
     'xaml' => [
         'application/xaml+xml',
     ],
-    'xdf' => [
-        'application/xcap-diff+xml',
+    'xav' => [
+        'application/xcap-att+xml',
+    ],
+    'xca' => [
+        'application/xcap-caps+xml',
+    ],
+    'xel' => [
+        'application/xcap-el+xml',
+    ],
+    'xns' => [
+        'application/xcap-ns+xml',
     ],
     'xenc' => [
         'application/xenc+xml',
@@ -2406,6 +2510,9 @@ class MimeTypesList
     ],
     'rmi' => [
         'audio/midi',
+    ],
+    'mxmf' => [
+        'audio/mobile-xmf',
     ],
     'mp3' => [
         'audio/mp3',
