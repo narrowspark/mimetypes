@@ -152,7 +152,7 @@ final class BuildCommand extends AbstractCommand
             array_values($mimeDb)
         );
 
-        $combinedArray =  array_combine(array_keys($mimeDb), $mimeDbExtensions);
+        $combinedArray = array_combine(array_keys($mimeDb), $mimeDbExtensions);
         $array = [];
 
         foreach ($combinedArray as $type => $extensions) {
