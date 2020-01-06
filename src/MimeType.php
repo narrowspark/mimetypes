@@ -13,9 +13,15 @@ declare(strict_types=1);
 
 namespace Narrowspark\MimeType;
 
+use LogicException;
 use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
 use Narrowspark\MimeType\Exception\RuntimeException;
 use RuntimeException as BaseRuntimeException;
+use function array_unshift;
+use function class_implements;
+use function count;
+use function in_array;
+use function sprintf;
 
 final class MimeType
 {
@@ -78,11 +84,11 @@ final class MimeType
      */
     public static function register(string $guesser): void
     {
-        if (\in_array(MimeTypeGuesserContract::class, \class_implements($guesser), true)) {
-            \array_unshift(self::$guessers, $guesser);
+        if (in_array(MimeTypeGuesserContract::class, class_implements($guesser), true)) {
+            array_unshift(self::$guessers, $guesser);
         }
 
-        throw new RuntimeException(\sprintf('You guesser [%s] should implement the [\%s].', $guesser, MimeTypeGuesserContract::class));
+        throw new RuntimeException(sprintf('You guesser [%s] should implement the [\%s].', $guesser, MimeTypeGuesserContract::class));
     }
 
     /**
@@ -99,14 +105,14 @@ final class MimeType
     {
         $guessers = self::getGuessers();
 
-        if (\count($guessers) === 0) {
+        if (count($guessers) === 0) {
             $msg = 'Unable to guess the mime type as no guessers are available';
 
             if (! MimeTypeFileInfoGuesser::isSupported()) {
                 $msg .= ' (Did you enable the php_fileinfo extension?).';
             }
 
-            throw new \LogicException($msg);
+            throw new LogicException($msg);
         }
 
         $exception = null;

@@ -13,8 +13,16 @@ declare(strict_types=1);
 
 namespace Narrowspark\MimeType\Build\Command;
 
+use DateTimeImmutable;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
+use const DIRECTORY_SEPARATOR;
+use function file_get_contents;
+use function file_put_contents;
+use function ltrim;
+use function preg_match_all;
+use function sprintf;
+use function str_replace;
 
 final class CommitCommand extends AbstractCommand
 {
@@ -40,11 +48,11 @@ final class CommitCommand extends AbstractCommand
             return 0;
         }
 
-        $date = (new \DateTimeImmutable('now'))->format(\DateTimeImmutable::RFC7231);
+        $date = (new DateTimeImmutable('now'))->format(DateTimeImmutable::RFC7231);
 
         $this->info('Making a commit to narrowspark/mimetypes.');
 
-        $gitCommitCommand = 'git commit -m "Automatically updated on ' . $date . '" -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'MimeTypesList.php  -o ' . $this->rootPath . \DIRECTORY_SEPARATOR . 'package.json';
+        $gitCommitCommand = 'git commit -m "Automatically updated on ' . $date . '" -o ' . $this->rootPath . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'MimeTypesList.php  -o ' . $this->rootPath . DIRECTORY_SEPARATOR . 'package.json';
 
         $this->info($gitCommitCommand);
 
@@ -87,7 +95,7 @@ final class CommitCommand extends AbstractCommand
             return 1;
         }
 
-        \preg_match_all('/\.?(\d+)/', \ltrim($gitGetLastTagProcess->getOutput(), 'v'), $result);
+        preg_match_all('/\.?(\d+)/', ltrim($gitGetLastTagProcess->getOutput(), 'v'), $result);
 
         $gitTagVersion = ($result[1][1] + 1) . '.0';
         $mimeDbVersion = $this->yarnLock->getPackage('mime-db')->getVersion();
@@ -105,10 +113,10 @@ Changed
  - updated mime-db to {version} thanks to @prisis
 
 PHP;
-        $changelogFilePath = $this->rootPath . \DIRECTORY_SEPARATOR . 'CHANGELOG.md';
-        $changelogFileContent = \file_get_contents($changelogFilePath);
+        $changelogFilePath = $this->rootPath . DIRECTORY_SEPARATOR . 'CHANGELOG.md';
+        $changelogFileContent = file_get_contents($changelogFilePath);
 
-        \file_put_contents($changelogFilePath, \str_replace('{version}', $mimeDbVersion, $changelogTemplate) . $changelogFileContent);
+        file_put_contents($changelogFilePath, str_replace('{version}', $mimeDbVersion, $changelogTemplate) . $changelogFileContent);
 
         $gitCommitCommand = 'git commit -m "Automatically updated changelog on ' . $date . '" -o ' . $changelogFilePath;
 
@@ -125,7 +133,7 @@ PHP;
 
         $this->info($gitCommitProcess->getOutput());
 
-        $gitCreateTagCommand = \sprintf('git tag -a %s -m \'%s\'', $result[1][0] . '.' . $gitTagVersion, \str_replace('{version}', $mimeDbVersion, $changelogTemplate));
+        $gitCreateTagCommand = sprintf('git tag -a %s -m \'%s\'', $result[1][0] . '.' . $gitTagVersion, str_replace('{version}', $mimeDbVersion, $changelogTemplate));
 
         $this->info($gitCreateTagCommand);
 
@@ -140,7 +148,7 @@ PHP;
 
         $this->info($tag = $gitCreateTagProcess->getOutput());
 
-        $gitPushTagCommand = \sprintf('git push origin %s --quiet', $tag);
+        $gitPushTagCommand = sprintf('git push origin %s --quiet', $tag);
 
         $this->info($gitPushTagCommand);
 

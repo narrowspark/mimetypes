@@ -21,6 +21,16 @@ use Narrowspark\MimeType\MimeTypeExtensionGuesser;
 use Narrowspark\MimeType\MimeTypeFileBinaryGuesser;
 use Narrowspark\MimeType\MimeTypeFileInfoGuesser;
 use PHPUnit\Framework\TestCase;
+use const DIRECTORY_SEPARATOR;
+use function chmod;
+use function file_exists;
+use function fileperms;
+use function getenv;
+use function mb_substr;
+use function sprintf;
+use function str_replace;
+use function touch;
+use function unlink;
 
 /**
  * @internal
@@ -34,9 +44,9 @@ final class MimeTypeTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        if (\file_exists($path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete'))) {
-            @\chmod($path, 0666);
-            @\unlink($path);
+        if (file_exists($path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete'))) {
+            @chmod($path, 0666);
+            @unlink($path);
         }
     }
 
@@ -91,7 +101,7 @@ final class MimeTypeTest extends TestCase
         try {
             MimeType::guess($path);
         } catch (FileNotFoundException $exception) {
-            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            self::assertSame(sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
     }
 
@@ -102,13 +112,13 @@ final class MimeTypeTest extends TestCase
         try {
             MimeType::guess($path);
         } catch (FileNotFoundException $exception) {
-            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            self::assertSame(sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
 
         try {
             MimeTypeFileInfoGuesser::guess($path);
         } catch (FileNotFoundException $exception) {
-            self::assertSame(\sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
+            self::assertSame(sprintf('The file "%s" does not exist.', $path), $exception->getMessage());
         }
     }
 
@@ -126,19 +136,19 @@ final class MimeTypeTest extends TestCase
 
     public function testGuessWithNonReadablePath(): void
     {
-        if (\DIRECTORY_SEPARATOR === '\\') {
+        if (DIRECTORY_SEPARATOR === '\\') {
             self::markTestSkipped('Can not verify chmod operations on Windows');
         }
 
-        if (! \getenv('USER') || 'root' === \getenv('USER')) {
+        if (! getenv('USER') || 'root' === getenv('USER')) {
             self::markTestSkipped('This test will fail if run under superuser');
         }
 
         $path = self::normalizeDirectorySeparator(__DIR__ . '/Fixture/to_delete');
-        \touch($path);
-        @\chmod($path, 0333);
+        touch($path);
+        @chmod($path, 0333);
 
-        if (\mb_substr(\sprintf('%o', \fileperms($path)), -4) === '0333') {
+        if (mb_substr(sprintf('%o', fileperms($path)), -4) === '0333') {
             $this->expectException(AccessDeniedException::class);
 
             MimeType::guess($path);
@@ -183,6 +193,6 @@ final class MimeTypeTest extends TestCase
      */
     private static function normalizeDirectorySeparator($paths)
     {
-        return \str_replace('\\', '/', $paths);
+        return str_replace('\\', '/', $paths);
     }
 }

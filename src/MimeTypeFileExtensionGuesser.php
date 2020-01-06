@@ -15,6 +15,11 @@ namespace Narrowspark\MimeType;
 
 use Narrowspark\MimeType\Exception\AccessDeniedException;
 use Narrowspark\MimeType\Exception\FileNotFoundException;
+use const PATHINFO_EXTENSION;
+use function function_exists;
+use function is_file;
+use function is_readable;
+use function pathinfo;
 
 final class MimeTypeFileExtensionGuesser extends MimeTypeExtensionGuesser
 {
@@ -23,7 +28,7 @@ final class MimeTypeFileExtensionGuesser extends MimeTypeExtensionGuesser
      */
     public static function isSupported(): bool
     {
-        return \function_exists('pathinfo');
+        return function_exists('pathinfo');
     }
 
     /**
@@ -38,14 +43,14 @@ final class MimeTypeFileExtensionGuesser extends MimeTypeExtensionGuesser
      */
     public static function guess(string $guess): ?string
     {
-        if (! \is_file($guess)) {
+        if (! is_file($guess)) {
             throw new FileNotFoundException($guess);
         }
 
-        if (! \is_readable($guess)) {
+        if (! is_readable($guess)) {
             throw new AccessDeniedException($guess);
         }
 
-        return parent::guess(\pathinfo($guess, \PATHINFO_EXTENSION));
+        return parent::guess(pathinfo($guess, PATHINFO_EXTENSION));
     }
 }
