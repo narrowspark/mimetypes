@@ -16,6 +16,13 @@ namespace Narrowspark\MimeType;
 use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
 use Narrowspark\MimeType\Exception\AccessDeniedException;
 use Narrowspark\MimeType\Exception\FileNotFoundException;
+use const FILEINFO_MIME_TYPE;
+use function finfo_close;
+use function finfo_file;
+use function finfo_open;
+use function function_exists;
+use function is_file;
+use function is_readable;
 
 final class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
 {
@@ -40,7 +47,7 @@ final class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
      */
     public static function isSupported(): bool
     {
-        return \function_exists('finfo_open');
+        return function_exists('finfo_open');
     }
 
     /**
@@ -67,27 +74,27 @@ final class MimeTypeFileInfoGuesser implements MimeTypeGuesserContract
      */
     public static function guess(string $filename): ?string
     {
-        if (! \is_file($filename)) {
+        if (! is_file($filename)) {
             throw new FileNotFoundException($filename);
         }
 
-        if (! \is_readable($filename)) {
+        if (! is_readable($filename)) {
             throw new AccessDeniedException($filename);
         }
 
         if (self::$magicFile !== null) {
-            $finfo = \finfo_open(\FILEINFO_MIME_TYPE, self::$magicFile);
+            $finfo = finfo_open(FILEINFO_MIME_TYPE, self::$magicFile);
         } else {
-            $finfo = \finfo_open(\FILEINFO_MIME_TYPE);
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
         }
 
         if ($finfo === false) {
             return null;
         }
 
-        $type = \finfo_file($finfo, $filename);
+        $type = finfo_file($finfo, $filename);
 
-        \finfo_close($finfo);
+        finfo_close($finfo);
 
         if ($type === false) {
             return null;

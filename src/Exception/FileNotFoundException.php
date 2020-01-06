@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Narrowspark\MimeType\Exception;
 
 use RuntimeException as BaseRuntimeException;
+use function sprintf;
 
 final class FileNotFoundException extends BaseRuntimeException
 {
@@ -24,6 +25,6 @@ final class FileNotFoundException extends BaseRuntimeException
      */
     public function __construct($path)
     {
-        parent::__construct(\sprintf('The file "%s" does not exist.', $path));
+        parent::__construct(sprintf('The file "%s" does not exist.', $path));
     }
 }

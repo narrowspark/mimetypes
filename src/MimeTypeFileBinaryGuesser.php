@@ -16,6 +16,20 @@ namespace Narrowspark\MimeType;
 use Narrowspark\MimeType\Contract\MimeTypeGuesser as MimeTypeGuesserContract;
 use Narrowspark\MimeType\Exception\AccessDeniedException;
 use Narrowspark\MimeType\Exception\FileNotFoundException;
+use const DIRECTORY_SEPARATOR;
+use const PHP_OS;
+use function escapeshellarg;
+use function function_exists;
+use function is_file;
+use function is_readable;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_start;
+use function passthru;
+use function preg_match;
+use function sprintf;
+use function stripos;
+use function trim;
 
 final class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
 {
@@ -39,14 +53,14 @@ final class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
             return (bool) $supported;
         }
 
-        if (\DIRECTORY_SEPARATOR === '\\' || ! \function_exists('passthru') || ! \function_exists('escapeshellarg')) {
+        if (DIRECTORY_SEPARATOR === '\\' || ! function_exists('passthru') || ! function_exists('escapeshellarg')) {
             return $supported = false;
         }
 
-        \ob_start();
-        \passthru('command -v file', $exitStatus);
+        ob_start();
+        passthru('command -v file', $exitStatus);
 
-        $binPath = \trim((string) \ob_get_clean());
+        $binPath = trim((string) ob_get_clean());
 
         return $supported = $exitStatus === 0 && '' !== $binPath;
     }
@@ -65,38 +79,38 @@ final class MimeTypeFileBinaryGuesser implements MimeTypeGuesserContract
      *
      * @return null|string
      */
-    public static function guess(string $path, string $cmd = null): ?string
+    public static function guess(string $path, ?string $cmd = null): ?string
     {
-        if (! \is_file($path)) {
+        if (! is_file($path)) {
             throw new FileNotFoundException($path);
         }
 
-        if (! \is_readable($path)) {
+        if (! is_readable($path)) {
             throw new AccessDeniedException($path);
         }
 
         if ($cmd === null) {
             $cmd = 'file -b --mime %s';
 
-            if (\stripos(\PHP_OS, 'win') !== 0) {
+            if (stripos(PHP_OS, 'win') !== 0) {
                 $cmd .= ' 2>/dev/null';
             }
         }
 
-        \ob_start();
+        ob_start();
 
         // need to use --mime instead of -i.
-        \passthru(\sprintf($cmd, \escapeshellarg($path)), $return);
+        passthru(sprintf($cmd, escapeshellarg($path)), $return);
 
         if ($return > 0) {
-            \ob_end_clean();
+            ob_end_clean();
 
             return null;
         }
 
-        $type = \trim((string) \ob_get_clean());
+        $type = trim((string) ob_get_clean());
 
-        if (\preg_match('#^([a-z0-9\-]+/[a-z0-9\-\.]+)#i', $type, $match) === false) {
+        if (preg_match('#^([a-z0-9\-]+/[a-z0-9\-\.]+)#i', $type, $match) === false) {
             // it's not a type, but an error message
             return null;
         }
