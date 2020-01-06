@@ -1,3 +1,15 @@
+v1.6.0
+======
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+Changed
+-------
+
+ - [21: updated mime-db to v1.43.0](https://github.com/narrowspark/mimetypes/pull/21) thanks to @prisis
+
 v1.5.0
 ======
 
