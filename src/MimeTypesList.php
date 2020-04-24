@@ -11,12 +11,12 @@ class MimeTypesList
      *
      * @var string
      */
-    public const MIME_DB_VERSION = '1.43.0';
+    public const MIME_DB_VERSION = '1.44.0';
 
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Mon, 06 Jan 2020 13:24:29 GMT
+     * Last generated: Fri, 24 Apr 2020 13:33:28 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -282,6 +282,9 @@ class MimeTypesList
     ],
     'nt' => [
         'application/n-triples',
+    ],
+    'cjs' => [
+        'application/node',
     ],
     'bin' => [
         'application/octet-stream',
@@ -2333,6 +2336,7 @@ class MimeTypesList
     ],
     'obj' => [
         'application/x-tgif',
+        'model/obj',
     ],
     'ustar' => [
         'application/x-ustar',
@@ -3003,6 +3007,9 @@ class MimeTypesList
     ],
     'silo' => [
         'model/mesh',
+    ],
+    'mtl' => [
+        'model/mtl',
     ],
     'dae' => [
         'model/vnd.collada+xml',
