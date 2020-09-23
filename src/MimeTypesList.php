@@ -11,12 +11,12 @@ class MimeTypesList
      *
      * @var string
      */
-    public const MIME_DB_VERSION = '1.44.0';
+    public const MIME_DB_VERSION = '1.45.0';
 
     /**
      * A map of file extensions and their mime types.
      *
-     * Last generated: Fri, 24 Apr 2020 13:33:28 GMT
+     * Last generated: Wed, 23 Sep 2020 15:14:23 GMT
      *
      * @see http://www.iana.org/assignments/media-types/media-types.xhtml
      * @see http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -599,8 +599,14 @@ class MimeTypesList
     'ttml' => [
         'application/ttml+xml',
     ],
+    'ubj' => [
+        'application/ubjson',
+    ],
     'rsheet' => [
         'application/urc-ressheet+xml',
+    ],
+    'td' => [
+        'application/urc-targetdesc+xml',
     ],
     '1km' => [
         'application/vnd.1000minds.decision-model+xml',
@@ -686,7 +692,7 @@ class MimeTypesList
     'mpkg' => [
         'application/vnd.apple.installer+xml',
     ],
-    'keynote' => [
+    'key' => [
         'application/vnd.apple.keynote',
     ],
     'm3u8' => [
@@ -805,6 +811,9 @@ class MimeTypesList
     ],
     'rdz' => [
         'application/vnd.data-vision.rdz',
+    ],
+    'dbf' => [
+        'application/vnd.dbf',
     ],
     'uvf' => [
         'application/vnd.dece.data',
@@ -1616,6 +1625,10 @@ class MimeTypesList
     'qxb' => [
         'application/vnd.quark.quarkxpress',
     ],
+    'rar' => [
+        'application/vnd.rar',
+        'application/x-rar-compressed',
+    ],
     'bed' => [
         'application/vnd.realvnc.bed',
     ],
@@ -2265,9 +2278,6 @@ class MimeTypesList
     'p7r' => [
         'application/x-pkcs7-certreqresp',
     ],
-    'rar' => [
-        'application/x-rar-compressed',
-    ],
     'rpm' => [
         'application/x-redhat-package-manager',
     ],
@@ -2447,6 +2457,7 @@ class MimeTypesList
     ],
     'xsl' => [
         'application/xml',
+        'application/xslt+xml',
     ],
     'xsd' => [
         'application/xml',
@@ -2685,6 +2696,9 @@ class MimeTypesList
     'apng' => [
         'image/apng',
     ],
+    'avif' => [
+        'image/avif',
+    ],
     'bmp' => [
         'image/bmp',
         'image/x-ms-bmp',
@@ -2783,6 +2797,9 @@ class MimeTypesList
     'ktx' => [
         'image/ktx',
     ],
+    'ktx2' => [
+        'image/ktx2',
+    ],
     'png' => [
         'image/png',
     ],
@@ -2877,6 +2894,9 @@ class MimeTypesList
     ],
     'npx' => [
         'image/vnd.net-fpx',
+    ],
+    'b16' => [
+        'image/vnd.pco.b16',
     ],
     'tap' => [
         'image/vnd.tencent.tap',
@@ -3171,6 +3191,9 @@ class MimeTypesList
     ],
     'slm' => [
         'text/slim',
+    ],
+    'spdx' => [
+        'text/spdx',
     ],
     'stylus' => [
         'text/stylus',
