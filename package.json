@@ -1,5 +1,22 @@
 {
+    "private": true,
+    "scripts": {
+        "prepare": "is-ci || husky install",
+        "lint:text": "textlint ./.github/ISSUE_TEMPLATE/** ./packages/** ./README.md ./UPGRADE.md --parallel --experimental --dry-run",
+        "fix:lint:text": "textlint ./.github/ISSUE_TEMPLATE/** ./packages/** ./README.md ./UPGRADE.md --parallel --experimental --fix"
+    },
     "dependencies": {
-        "mime-db": "^1.45.0"
+        "mime-db": "^1.51.0"
+    },
+    "devDependencies": {
+        "@anolilab/semantic-release-preset": "^1.2.1",
+        "@anolilab/textlint-config": "^3.0.1",
+        "@commitlint/cli": "^16.0.2",
+        "@commitlint/config-conventional": "^16.0.0",
+        "commitizen": "^4.2.4",
+        "husky": "^7.0.4",
+        "semantic-release": "^18.0.1",
+        "textlint": "^12.1.0",
+        "is-ci": "^3.0.1"
     }
 }
