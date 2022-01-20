@@ -1,29 +1,40 @@
 <?php
+
+declare(strict_types=1);
+
+use Ergebnis\License;
 use Narrowspark\CS\Config\Config;
 
-$header = <<<'EOF'
-This file is part of Narrowspark.
+$license = static function ($path) {
+    return License\Type\MIT::markdown(
+        $path . '/LICENSE.md',
+        License\Range::since(
+            License\Year::fromString('2018'),
+            new \DateTimeZone('UTC')
+        ),
+        License\Holder::fromString('Daniel Bannert'),
+        License\Url::fromString('https://github.com/narrowspark/automatic')
+    );
+};
 
-(c) Daniel Bannert <d.bannert@anolilab.de>
+$mainLicense = $license(__DIR__);
+$mainLicense->save();
 
-This source file is subject to the MIT license that is bundled
-with this source code in the file LICENSE.
-EOF;
+$license(__DIR__ . '/src/Common')->save();
+$license(__DIR__ . '/src/LegacyFilter')->save();
+$license(__DIR__ . '/src/Security')->save();
 
-$config = new Config($header, [
+$config = new Config($mainLicense->header(), [
+    'native_function_invocation' => [
+        'exclude' => [
+            'getcwd',
+            'extension_loaded',
+        ],
+    ],
     'final_class' => false,
-    'heredoc_indentation' => false,
-    'PhpCsFixerCustomFixers/no_commented_out_code' => false,
-    'PhpCsFixerCustomFixers/phpdoc_no_superfluous_param' => false,
-    'PhpCsFixerCustomFixers/data_provider_return_type' => true,
-    'PhpCsFixerCustomFixers/data_provider_name' => true,
-    'PhpCsFixerCustomFixers/comment_surrounded_by_spaces' => true,
-    'PhpCsFixerCustomFixers/no_duplicated_imports' => true,
-    'PhpCsFixerCustomFixers/no_useless_sprintf' => true,
-    'PhpCsFixerCustomFixers/php_unit_no_useless_return' => true,
-    'PhpCsFixerCustomFixers/single_line_throw' => true,
-    'PedroTroller/line_break_between_method_arguments' => false,
+    'final_public_method_for_abstract_class' => false,
 ]);
+
 $config->getFinder()
     ->files()
     ->in(__DIR__)
@@ -31,12 +42,11 @@ $config->getFinder()
     ->exclude('vendor')
     ->notPath('tests/Fixture/ActualMimeTypeDbList.php')
     ->notPath('src/MimeTypesList.php')
+    ->notPath('rector.php')
     ->name('*.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-$cacheDir = getenv('TRAVIS') ? getenv('HOME') . '/.php-cs-fixer' : __DIR__;
-
-$config->setCacheFile($cacheDir . '/.php_cs.cache');
+$config->setCacheFile(__DIR__ . '/.build/php-cs-fixer/.php_cs.cache');
 
 return $config;
