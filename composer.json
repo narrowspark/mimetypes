@@ -1,14 +1,14 @@
 {
     "name": "narrowspark/mimetypes",
-    "type": "library",
     "description": "PHP MIME Types Guesser and extension mapping.",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "narrowspark",
         "mimetype",
         "mimetypes",
         "guesser"
     ],
-    "license": "MIT",
     "authors": [
         {
             "name": "Daniel Bannert",
@@ -17,20 +17,22 @@
             "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/narrowspark/mimetypes/issues",
+        "source": "https://github.com/narrowspark/mimetypes"
+    },
     "require": {
-        "php": "^7.2"
+        "php": "^8.0"
     },
     "require-dev": {
         "ext-fileinfo": "*",
         "ext-json": "*",
+        "mindscreen/yarnlock": "^1.0.1",
         "narrowspark/coding-standard": "^3.0.0",
-        "phpunit/phpunit": "^8.3.4",
-        "mindscreen/yarnlock": "^1.0.1"
+        "phpunit/phpunit": "^8.3.4"
     },
-    "config": {
-        "optimize-autoloader": true,
-        "sort-packages": true
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Narrowspark\\MimeType\\": "src/"
@@ -44,17 +46,15 @@
             "Narrowspark\\MimeType\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
     "scripts": {
+        "changelog": "changelog-generator generate --config=\".changelog\" --file --prepend",
         "coverage": "phpunit --coverage-html=\"build/logs\"",
         "cs": "php-cs-fixer fix -v",
         "phpstan": "phpstan analyse -c phpstan.neon src --memory-limit=-1",
-        "test": "phpunit",
-        "changelog":  "changelog-generator generate --config=\".changelog\" --file --prepend"
-    },
-    "support": {
-        "issues": "https://github.com/narrowspark/mimetypes/issues",
-        "source": "https://github.com/narrowspark/mimetypes"
+        "test": "phpunit"
     }
 }
